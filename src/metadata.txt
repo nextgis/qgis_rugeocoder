@@ -4,18 +4,18 @@
 name=RuGeocoder
 qgisMinimumVersion=1.6
 description=Geocode your csv files to shp
-version=0.21
+version=0.3
 
 
 # Optional items:
 
-changelog=0.21 Code refactoring \n 0.1 Init version
+changelog=0.3 Change code hosting
 
 tags= Geocoding, Address, Yandex, Google, Nominatim
-homepage=
-tracker=
-repository=
-icon=icon.png
+homepage=https://github.com/yellow-sky/RuGeocoder
+tracker=https://github.com/yellow-sky/RuGeocoder/issues
+repository=https://github.com/yellow-sky/RuGeocoder
+icon=icon.png 
 experimental=True
 deprecated=False
 
