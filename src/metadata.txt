@@ -1,0 +1,24 @@
+# Mandatory items:
+
+[general]
+name=RuGeocoder
+qgisMinimumVersion=1.6
+description=Geocode your csv files to shp
+version=0.21
+
+
+# Optional items:
+
+changelog=0.21 Code refactoring \n 0.1 Init version
+
+tags= Geocoding, Address, Yandex, Google, Nominatim
+homepage=
+tracker=
+repository=
+icon=icon.png
+experimental=True
+deprecated=False
+
+# Author contact information
+author=Nikulin Evgeniy
+email=nikulin.e at gmail
