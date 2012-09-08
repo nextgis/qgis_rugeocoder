@@ -82,7 +82,7 @@ class ConverterDialog(QDialog, Ui_ConverterDialog):
             drv = ogr.GetDriverByName("ESRI Shapefile")
             output_data_source = drv.CreateDataSource(out_path)
         except:
-            QMessageBox.critical(self, self.tr("Geocoding helper error"),
+            QMessageBox.critical(self, self.tr("RuGeocoder error"),
                                      self.tr("Output SHP file can't be created!\r%1: %2")
                                      .arg(unicode(sys.exc_info()[0].__name__))
                                      .arg(unicode(sys.exc_info()[1])))

@@ -3,6 +3,7 @@
 #Build zip packet
 
 #Create if need
+rm -R /tmp/build_plugin/ru_geocoder
 mkdir /tmp/build_plugin/
 mkdir /tmp/build_plugin/ru_geocoder
 cp ./src/* /tmp/build_plugin/ru_geocoder

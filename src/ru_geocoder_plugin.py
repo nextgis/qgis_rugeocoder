@@ -18,8 +18,9 @@
  *                                                                         *
  ***************************************************************************/
 """
+from os import path
 # Import the PyQt and QGIS libraries
-from PyQt4.QtCore import QObject, SIGNAL, Qt
+from PyQt4.QtCore import QObject, SIGNAL, Qt, QSettings, QVariant, QLocale, QFileInfo, QTranslator, QCoreApplication
 from PyQt4.QtGui import QAction, QIcon
 #from qgis.core import *
 # Initialize Qt resources from file resources.py
@@ -28,19 +29,36 @@ import resources
 from batch_geocoding_dialog import BatchGeocodingDialog
 from converter_dialog import ConverterDialog
 
+
+currentPath = path.abspath(path.dirname(__file__))
+
+
 class RuGeocoderPlugin:
     def __init__(self, iface):
         # Save reference to the QGIS interface
         self.iface = iface
 
+        # i18n support
+        overrideLocale = QSettings().value("locale/overrideFlag", QVariant(False)).toBool()
+        if not overrideLocale:
+            localeFullName = QLocale.system().name()
+        else:
+            localeFullName = QSettings().value("locale/userLocale", QVariant("")).toString()
+
+        self.localePath = currentPath + "/i18n/rugeocoder_" + localeFullName[0:2] + ".qm"
+        if QFileInfo(self.localePath).exists():
+            self.translator = QTranslator()
+            self.translator.load(self.localePath)
+            QCoreApplication.installTranslator(self.translator)
+
     def initGui(self):
         # Setup signals
         self.action_convert = QAction(QIcon(":/plugins/rugeocoderplugin/convert.png"), \
-            "Convert CSV to SHP", self.iface.mainWindow())
+            QCoreApplication.translate("RuGeocoder", "Convert CSV to SHP"), self.iface.mainWindow())
         QObject.connect(self.action_convert, SIGNAL("triggered()"), self.run_convert)
 
         self.action_batch_geocoding = QAction(QIcon(":/plugins/rugeocoderplugin/icon.png"), \
-            "Batch geocoding", self.iface.mainWindow())
+            QCoreApplication.translate("RuGeocoder", "Batch geocoding"), self.iface.mainWindow())
         QObject.connect(self.action_batch_geocoding, SIGNAL("triggered()"), self.run_batch)
 
         # Add toolbar button and menu item
