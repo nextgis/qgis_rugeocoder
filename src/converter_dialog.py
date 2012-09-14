@@ -151,7 +151,12 @@ class ConverterDialog(QDialog, Ui_ConverterDialog):
                 self.__show_err(self.tr("Failed to create feature in SHP file!"))
                 return
             in_feat = csv_layer.GetNextFeature()
-
+        
+        #close DS's
+        output_data_source.Destroy()
+        input_data_source.Destroy()
+        
+        
         QMessageBox.information(self, self.tr("RuGeocoder"), self.tr("Converting successfully completed"))
         if self.chkAddToCanvas.isChecked():
             self.add_layer_to_canvas(out_path)
