@@ -24,7 +24,7 @@ import urllib
 from qgis.core import QgsPoint 
 
 class OsmGeocoder():
-    url = 'http://nominatim.openstreetmap.org/search?countrycodes=ru&format=json&polygon=0&addressdetails=1&limit=10&q='
+    url = 'http://nominatim.openstreetmap.org/search?countrycodes=ru&format=json&polygon=0&addressdetails=1&limit=10&accept-language=ru,en-US;&q='
 
     def _construct_search_str(self, region, rayon, city, street, house_number):
         search_str = ''
