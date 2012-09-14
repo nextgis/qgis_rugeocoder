@@ -40,6 +40,7 @@ class BatchGeocodingDialog(QDialog, Ui_BatchGeocodingDialog):
     def __init__(self):
         QDialog.__init__(self)
         self.setupUi(self)
+        self.setFixedSize(self.size())
         
         #SIGNALS
         QObject.connect(self.btnRun, SIGNAL( "clicked()" ), self.processing)

@@ -2,7 +2,7 @@
 
 # Form implementation generated from reading ui file './batch_geocoding_dialog.ui'
 #
-# Created: Mon Feb 27 16:46:23 2012
+# Created: Fri Sep 14 17:20:58 2012
 #      by: PyQt4 UI code generator 4.8.6
 #
 # WARNING! All changes made in this file will be lost!
@@ -17,18 +17,16 @@ except AttributeError:
 class Ui_BatchGeocodingDialog(object):
     def setupUi(self, BatchGeocodingDialog):
         BatchGeocodingDialog.setObjectName(_fromUtf8("BatchGeocodingDialog"))
-        BatchGeocodingDialog.resize(393, 335)
-        sizePolicy = QtGui.QSizePolicy(QtGui.QSizePolicy.Fixed, QtGui.QSizePolicy.Fixed)
+        BatchGeocodingDialog.resize(403, 360)
+        sizePolicy = QtGui.QSizePolicy(QtGui.QSizePolicy.Preferred, QtGui.QSizePolicy.Preferred)
         sizePolicy.setHorizontalStretch(0)
         sizePolicy.setVerticalStretch(0)
         sizePolicy.setHeightForWidth(BatchGeocodingDialog.sizePolicy().hasHeightForWidth())
         BatchGeocodingDialog.setSizePolicy(sizePolicy)
-        BatchGeocodingDialog.setMinimumSize(QtCore.QSize(359, 0))
-        BatchGeocodingDialog.setMaximumSize(QtCore.QSize(5000, 5000))
         BatchGeocodingDialog.setWindowTitle(QtGui.QApplication.translate("BatchGeocodingDialog", "Batch geocoding", None, QtGui.QApplication.UnicodeUTF8))
         BatchGeocodingDialog.setSizeGripEnabled(False)
         self.gridLayout = QtGui.QGridLayout(BatchGeocodingDialog)
-        self.gridLayout.setContentsMargins(-1, -1, -1, 0)
+        self.gridLayout.setContentsMargins(-1, -1, -1, 4)
         self.gridLayout.setObjectName(_fromUtf8("gridLayout"))
         self.lblRegion = QtGui.QLabel(BatchGeocodingDialog)
         font = QtGui.QFont()
@@ -133,10 +131,20 @@ class Ui_BatchGeocodingDialog(object):
         self.rbRayonField.setObjectName(_fromUtf8("rbRayonField"))
         self.gridLayout_2.addWidget(self.rbRayonField, 2, 0, 1, 1)
         self.txtRayonName = QtGui.QLineEdit(self.frmRayon)
+        sizePolicy = QtGui.QSizePolicy(QtGui.QSizePolicy.Expanding, QtGui.QSizePolicy.Preferred)
+        sizePolicy.setHorizontalStretch(0)
+        sizePolicy.setVerticalStretch(0)
+        sizePolicy.setHeightForWidth(self.txtRayonName.sizePolicy().hasHeightForWidth())
+        self.txtRayonName.setSizePolicy(sizePolicy)
         self.txtRayonName.setObjectName(_fromUtf8("txtRayonName"))
         self.gridLayout_2.addWidget(self.txtRayonName, 0, 1, 1, 1)
         self.cmbRayonField = QtGui.QComboBox(self.frmRayon)
         self.cmbRayonField.setEnabled(False)
+        sizePolicy = QtGui.QSizePolicy(QtGui.QSizePolicy.Preferred, QtGui.QSizePolicy.Preferred)
+        sizePolicy.setHorizontalStretch(0)
+        sizePolicy.setVerticalStretch(0)
+        sizePolicy.setHeightForWidth(self.cmbRayonField.sizePolicy().hasHeightForWidth())
+        self.cmbRayonField.setSizePolicy(sizePolicy)
         self.cmbRayonField.setObjectName(_fromUtf8("cmbRayonField"))
         self.gridLayout_2.addWidget(self.cmbRayonField, 2, 1, 1, 1)
         self.gridLayout.addWidget(self.frmRayon, 3, 1, 1, 3)
@@ -157,9 +165,19 @@ class Ui_BatchGeocodingDialog(object):
         self.gridLayout_3.addWidget(self.rbSettlField, 2, 0, 1, 1)
         self.cmbSettlField = QtGui.QComboBox(self.frmSettlement)
         self.cmbSettlField.setEnabled(False)
+        sizePolicy = QtGui.QSizePolicy(QtGui.QSizePolicy.Preferred, QtGui.QSizePolicy.Preferred)
+        sizePolicy.setHorizontalStretch(0)
+        sizePolicy.setVerticalStretch(0)
+        sizePolicy.setHeightForWidth(self.cmbSettlField.sizePolicy().hasHeightForWidth())
+        self.cmbSettlField.setSizePolicy(sizePolicy)
         self.cmbSettlField.setObjectName(_fromUtf8("cmbSettlField"))
         self.gridLayout_3.addWidget(self.cmbSettlField, 2, 1, 1, 1)
         self.txtSettlName = QtGui.QLineEdit(self.frmSettlement)
+        sizePolicy = QtGui.QSizePolicy(QtGui.QSizePolicy.Expanding, QtGui.QSizePolicy.Preferred)
+        sizePolicy.setHorizontalStretch(0)
+        sizePolicy.setVerticalStretch(0)
+        sizePolicy.setHeightForWidth(self.txtSettlName.sizePolicy().hasHeightForWidth())
+        self.txtSettlName.setSizePolicy(sizePolicy)
         self.txtSettlName.setObjectName(_fromUtf8("txtSettlName"))
         self.gridLayout_3.addWidget(self.txtSettlName, 0, 1, 1, 1)
         self.gridLayout.addWidget(self.frmSettlement, 4, 1, 1, 3)
