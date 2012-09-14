@@ -37,6 +37,9 @@ class RuGeocoderPlugin:
     def __init__(self, iface):
         # Save reference to the QGIS interface
         self.iface = iface
+        self.__converter_dlg=ConverterDialog()
+        self.__geocoder_dlg=BatchGeocodingDialog()
+        
 
         # i18n support
         overrideLocale = QSettings().value("locale/overrideFlag", QVariant(False)).toBool()
@@ -78,11 +81,13 @@ class RuGeocoderPlugin:
         self.iface.removeToolBarIcon(self.action_batch_geocoding)
 
     def run_convert(self):
-        dlg = ConverterDialog()
-        dlg.show()
-        dlg.exec_()
+        if not self.__converter_dlg.isVisible():
+            self.__converter_dlg=ConverterDialog()
+            self.__converter_dlg.show()
+            self.__converter_dlg.exec_()
 
     def run_batch(self):
-        dlg = BatchGeocodingDialog()
-        dlg.show()
-        dlg.exec_()
+        if not self.__geocoder_dlg.isVisible():
+            self.__geocoder_dlg=BatchGeocodingDialog()
+            self.__geocoder_dlg.show()
+            self.__geocoder_dlg.exec_()
