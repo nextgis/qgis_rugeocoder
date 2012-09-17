@@ -24,13 +24,13 @@ from os import path
 _current_path = path.abspath(path.dirname(__file__))
 
 def get_regions_names():
-    layer = QgsVectorLayer(path.join(_current_path,"regions.sqlite"), "regions", "ogr")
+    layer = QgsVectorLayer(path.join(_current_path,"data.sqlite"), "regions", "ogr")
     layer.setProviderEncoding('utf-8')
     if layer.isValid():
         feat = QgsFeature()
         names = []
         data_provider = layer.dataProvider()
-        region_filed_index = data_provider.fieldNameIndex("region")
+        region_filed_index = data_provider.fieldNameIndex("name")
         attrs = [region_filed_index,]
         data_provider.select(attrs, QgsRectangle(), False)
 
