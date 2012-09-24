@@ -18,26 +18,40 @@
  *                                                                         *
  ***************************************************************************/
 """
-from qgis.core import QgsVectorLayer, QgsFeature, QgsRectangle
 from os import path
 
+try:
+    from osgeo import ogr, osr,  gdal
+except ImportError:
+    import ogr, osr,  gdal
+
 _current_path = path.abspath(path.dirname(__file__))
-
+_data_path=path.join(_current_path,"data.sqlite")
+        
 def get_regions_names():
-    layer = QgsVectorLayer(path.join(_current_path,"data.sqlite"), "regions", "ogr")
-    layer.setProviderEncoding('utf-8')
-    if layer.isValid():
-        feat = QgsFeature()
-        names = []
-        data_provider = layer.dataProvider()
-        region_filed_index = data_provider.fieldNameIndex("name")
-        attrs = [region_filed_index,]
-        data_provider.select(attrs, QgsRectangle(), False)
+    ds = ogr.Open(_data_path)
+    layer = ds['region']
+    regions = []
+    feat = layer.GetNextFeature()
+    while feat is not None:
+        id = feat.GetFID()
+        name = unicode(feat.GetField('name'), 'utf-8')
+        is_town = feat.GetField('is_settlement')
+        regions.append({'id':id,  'name':name,  'is_settlement':is_town})
+        feat = layer.GetNextFeature()
+    ds.Destroy()
+    return regions
 
-        while data_provider.nextFeature(feat):
-            attr_map = feat.attributeMap()
-            region_name = unicode(attr_map[region_filed_index].toString())
-            names.append(region_name)
-        return names
+def get_specific_region_name(geocoder,  region_id):
+    ds = ogr.Open(_data_path)
+    layer_name = 'region_'+geocoder.lower()
+    layer = ds.GetLayerByName(layer_name.encode('utf-8'))
+    if layer == None:
+        layer = ds['region']
+    specific_name = layer.GetFeature(region_id).GetField("name")
+    if specific_name!=None: #maybe Null!
+        specific_name = unicode(specific_name, 'utf-8')
     else:
-        return []
+        specific_name = ''
+    ds.Destroy()
+    return specific_name
