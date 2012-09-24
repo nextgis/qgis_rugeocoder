@@ -77,7 +77,7 @@ class RuGeocoderPlugin:
         self.iface.removePluginMenu("&RuGeocoder", self.action_convert)
         self.iface.removeToolBarIcon(self.action_convert)
 
-        self.iface.removePluginMenu("&RUGeocoder", self.action_batch_geocoding)
+        self.iface.removePluginMenu("&RuGeocoder", self.action_batch_geocoding)
         self.iface.removeToolBarIcon(self.action_batch_geocoding)
 
     def run_convert(self):
