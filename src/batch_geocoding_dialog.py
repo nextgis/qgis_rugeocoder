@@ -27,7 +27,7 @@ from google_geocoder import GoogleGeocoder
 from yandex_geocoder import YandexGeocoder
 
 from PyQt4.QtGui import QDialog, QMessageBox
-from PyQt4.QtCore import QObject, SIGNAL
+from PyQt4.QtCore import QObject, SIGNAL, QString
 
 from qgis.core import QGis, QgsRectangle, QgsFeature, QgsGeometry
 
@@ -50,8 +50,9 @@ class BatchGeocodingDialog(QDialog, Ui_BatchGeocodingDialog):
         
         #INIT CONTROLS VALUES
         self.cmbGeocoder.addItems(["OSM", "Google", "Yandex"])
-        self.cmbRegion.addItems(regions_helper.get_regions_names())
         self.cmbLayer.addItems(get_layer_names([QGis.Point]))
+        for region in regions_helper.get_regions_names():
+            self.cmbRegion.addItem(region['name'],  region)
 
 
 
@@ -135,12 +136,16 @@ class BatchGeocodingDialog(QDialog, Ui_BatchGeocodingDialog):
         feat = QgsFeature()
         attrs = data_provider.attributeIndexes()
         data_provider.select(attrs, QgsRectangle(), False)
+        
+        #select region
+        geocoder_name = unicode(self.cmbGeocoder.currentText())
+        region_id = self.cmbRegion.itemData(self.cmbRegion.currentIndex()).toPyObject()[QString('id')]
+        region = regions_helper.get_specific_region_name(geocoder_name,  region_id)
+        #region = unicode(self.cmbRegion.currentText()) #for tests!!!
 
         while data_provider.nextFeature(feat):
             #get values for geocoding
             attr_map = feat.attributeMap()
-
-            region = unicode(self.cmbRegion.currentText())
 
             if self.rbRayonName.isChecked():
                 rayon = unicode(self.txtRayonName.text() )
