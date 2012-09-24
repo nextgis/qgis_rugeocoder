@@ -24,7 +24,7 @@ def name():
 def description():
     return "Geocode your csv files to shp (Russia only)"
 def version():
-    return "Version 0.3.1"
+    return "Version 0.3.2"
 def icon():
     return "icon.png"
 def qgisMinimumVersion():
