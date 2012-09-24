@@ -141,7 +141,7 @@ class BatchGeocodingDialog(QDialog, Ui_BatchGeocodingDialog):
         geocoder_name = unicode(self.cmbGeocoder.currentText())
         region_id = self.cmbRegion.itemData(self.cmbRegion.currentIndex()).toPyObject()[QString('id')]
         region = regions_helper.get_specific_region_name(geocoder_name,  region_id)
-        region = unicode(self.cmbRegion.currentText()) #for tests!!!
+        #region = unicode(self.cmbRegion.currentText()) #for tests!!!
 
         while data_provider.nextFeature(feat):
             #get values for geocoding
