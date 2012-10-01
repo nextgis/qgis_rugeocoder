@@ -30,30 +30,29 @@ class YandexGeocoder():
     def _construct_search_str(self, region, rayon, city, street, house_number):
         search_str = ''
         if region:
-            search_str += region +','
+            search_str += region +', '
         if rayon:
-            search_str += rayon+','
+            search_str += rayon+', '
         if city:
-            search_str += city+','
+            search_str += city+', '
         if street:
-            search_str += street+','
+            search_str += street+', '
         if house_number:
             search_str += house_number
-        
+        search_str = search_str.rstrip().rstrip(',')
+        #QMessageBox.information(None, "Geocoding debug", search_str)
         return search_str
         
     def geocode(self, region, rayon, city, street, house_number):
         full_addr = self._construct_search_str(region, rayon, city, street, house_number)
         full_addr = urllib.quote(full_addr.encode("utf-8"))
         full_url = unicode(self.url) + unicode(full_addr, "utf-8")
-        #QMessageBox.information(None, "Geocoding", full_url)
-        
-        
+        #QMessageBox.information(None, "Geocoding debug", full_url)
+                
         f = urllib2.urlopen ( full_url.encode("utf-8") )
         resp_str = unicode( f.read(),  'utf-8')
         resp_json = json.loads(resp_str)
-        
-        
+                
         if resp_json["response"]["GeoObjectCollection"]["featureMember"]:
             res0 = resp_json["response"]["GeoObjectCollection"]["featureMember"][0]
             pt_str = res0["GeoObject"]["Point"]["pos"]
@@ -61,6 +60,6 @@ class YandexGeocoder():
             return pt, res0["GeoObject"]["metaDataProperty"]["GeocoderMetaData"]["text"]
         else:
             pt = QgsPoint( 0, 0)
-            return pt, "None"
+            return pt, "Not found"
         
             

@@ -21,6 +21,20 @@
 
 from qgis.core import QgsMapLayerRegistry, QgsMapLayer
 
+
+
+def get_layer_all_fields(layer):
+    '''
+    Return all fields for layer
+    Use fTools code
+    '''
+    field_map = layer.dataProvider().fields()
+    field_list = []
+    for num, field in field_map.iteritems():
+            field_list.append( unicode( field.name() ) )
+    return field_list # sorted( field_list, cmp=locale.strcoll ) 
+
+
 def get_layer_str_fields(layer):
     '''
     Return only string fields for layer
@@ -29,7 +43,6 @@ def get_layer_str_fields(layer):
     field_map = layer.dataProvider().fields()
     field_list = []
     for num, field in field_map.iteritems():
-        print field.typeName()
         if field.typeName() == 'String':
             field_list.append( unicode( field.name() ) )
     return field_list # sorted( field_list, cmp=locale.strcoll ) 
