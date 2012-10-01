@@ -60,13 +60,13 @@ class BatchGeocodingDialog(QDialog, Ui_BatchGeocodingDialog):
         
         #set cmb's
         self.cmbAddress.clear()
-        self.cmbRayonField.clear()
+        self.cmbDistrictField.clear()
         self.cmbSettlField.clear()
         self.cmbStreet.clear()
         self.cmbBuildingNum.clear()
 
         self.cmbAddress.addItems(str_fields)
-        self.cmbRayonField.addItems(str_fields)
+        self.cmbDistrictField.addItems(str_fields)
         self.cmbSettlField.addItems(str_fields)
         self.cmbStreet.addItems(str_fields)
         self.cmbBuildingNum.addItems(all_fields)
@@ -82,11 +82,11 @@ class BatchGeocodingDialog(QDialog, Ui_BatchGeocodingDialog):
             QMessageBox.warning(self, self.tr("RuGeocoder"), self.tr("You need to select the field containing the addresses!"))
             return
 
-        if self.chkDistrict.isChecked() and self.rbRayonName.isChecked() and not self.txtSettlName.text():
+        if self.chkDistrict.isChecked() and self.rbDisctrictName.isChecked() and not self.txtDistrictName.text():
             QMessageBox.warning(self, self.tr("RuGeocoder"), self.tr("You need to enter the district name!"))
             return
 
-        if self.chkDistrict.isChecked() and self.rbRayonField.isChecked() and not self.cmbRayonField.currentText():
+        if self.chkDistrict.isChecked() and self.rbDistrictField.isChecked() and not self.cmbDistrictField.currentText():
             QMessageBox.warning(self, self.tr("RuGeocoder"), self.tr("You need to select the field containing the names of districts!"))
             return
 
@@ -122,7 +122,7 @@ class BatchGeocodingDialog(QDialog, Ui_BatchGeocodingDialog):
 
         #get num of fields
         addr_index = data_provider.fieldNameIndex(self.cmbAddress.currentText())
-        rayon_index = data_provider.fieldNameIndex(self.cmbRayonField.currentText())
+        district_index = data_provider.fieldNameIndex(self.cmbDistrictField.currentText())
         settl_index = data_provider.fieldNameIndex(self.cmbSettlField.currentText())
         street_index = data_provider.fieldNameIndex(self.cmbStreet.currentText())
         build_index = data_provider.fieldNameIndex(self.cmbBuildingNum.currentText())
@@ -154,12 +154,12 @@ class BatchGeocodingDialog(QDialog, Ui_BatchGeocodingDialog):
 
             addr = unicode(attr_map[addr_index].toString())
 
-            rayon = None
+            district = None
             if self.chkDistrict.isChecked():
-                if self.rbRayonName.isChecked():
-                    rayon = unicode(self.txtRayonName.text() )
+                if self.rbDisctrictName.isChecked():
+                    district = unicode(self.txtDistrictName.text())
                 else:
-                    rayon = unicode(attr_map[rayon_index].toString())
+                    district = unicode(attr_map[district_index].toString())
 
             settl = None
             if self.chkSettlement.isChecked():
@@ -176,7 +176,7 @@ class BatchGeocodingDialog(QDialog, Ui_BatchGeocodingDialog):
                 build_num = None
 
             #geocode
-            pt, desc = coder.geocode(region, rayon, settl, street, build_num)
+            pt, desc = coder.geocode(region, district, settl, street, build_num)
 
             #set geom
             layer.changeGeometry(feat.id(), QgsGeometry.fromPoint(pt)) 

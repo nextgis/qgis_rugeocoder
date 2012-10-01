@@ -222,7 +222,7 @@
     </widget>
    </item>
    <item row="6" column="1" colspan="3">
-    <widget class="QFrame" name="frmRayon">
+    <widget class="QFrame" name="frmDistrict">
      <property name="enabled">
       <bool>false</bool>
      </property>
@@ -234,7 +234,7 @@
      </property>
      <layout class="QGridLayout" name="gridLayout_2">
       <item row="0" column="0">
-       <widget class="QRadioButton" name="rbRayonName">
+       <widget class="QRadioButton" name="rbDisctrictName">
         <property name="text">
          <string>Name</string>
         </property>
@@ -244,7 +244,7 @@
        </widget>
       </item>
       <item row="2" column="0">
-       <widget class="QRadioButton" name="rbRayonField">
+       <widget class="QRadioButton" name="rbDistrictField">
         <property name="text">
          <string>From field</string>
         </property>
@@ -254,10 +254,7 @@
        </widget>
       </item>
       <item row="0" column="1">
-       <widget class="QLineEdit" name="txtRayonName">
-        <property name="enabled">
-         <bool>false</bool>
-        </property>
+       <widget class="QLineEdit" name="txtDistrictName">
         <property name="sizePolicy">
          <sizepolicy hsizetype="Expanding" vsizetype="Preferred">
           <horstretch>0</horstretch>
@@ -267,7 +264,7 @@
        </widget>
       </item>
       <item row="2" column="1">
-       <widget class="QComboBox" name="cmbRayonField">
+       <widget class="QComboBox" name="cmbDistrictField">
         <property name="enabled">
          <bool>false</bool>
         </property>
@@ -304,10 +301,10 @@
   <tabstop>chkRegion</tabstop>
   <tabstop>cmbRegion</tabstop>
   <tabstop>chkDistrict</tabstop>
-  <tabstop>rbRayonName</tabstop>
-  <tabstop>txtRayonName</tabstop>
-  <tabstop>rbRayonField</tabstop>
-  <tabstop>cmbRayonField</tabstop>
+  <tabstop>rbDisctrictName</tabstop>
+  <tabstop>txtDistrictName</tabstop>
+  <tabstop>rbDistrictField</tabstop>
+  <tabstop>cmbDistrictField</tabstop>
   <tabstop>chkSettlement</tabstop>
   <tabstop>rbSettlName</tabstop>
   <tabstop>txtSettlName</tabstop>
@@ -354,9 +351,9 @@
    </hints>
   </connection>
   <connection>
-   <sender>rbRayonField</sender>
+   <sender>rbDistrictField</sender>
    <signal>toggled(bool)</signal>
-   <receiver>cmbRayonField</receiver>
+   <receiver>cmbDistrictField</receiver>
    <slot>setEnabled(bool)</slot>
    <hints>
     <hint type="sourcelabel">
@@ -370,9 +367,9 @@
    </hints>
   </connection>
   <connection>
-   <sender>rbRayonName</sender>
+   <sender>rbDisctrictName</sender>
    <signal>toggled(bool)</signal>
-   <receiver>txtRayonName</receiver>
+   <receiver>txtDistrictName</receiver>
    <slot>setEnabled(bool)</slot>
    <hints>
     <hint type="sourcelabel">
@@ -420,7 +417,7 @@
   <connection>
    <sender>chkDistrict</sender>
    <signal>toggled(bool)</signal>
-   <receiver>frmRayon</receiver>
+   <receiver>frmDistrict</receiver>
    <slot>setEnabled(bool)</slot>
    <hints>
     <hint type="sourcelabel">
