@@ -3,57 +3,57 @@
 <context>
     <name>BatchGeocodingDialog</name>
     <message>
-        <location filename="batch_geocoding_dialog.py" line="60"/>
+        <location filename="ui_batch_geocoding_dialog.py" line="53"/>
         <source>Street:</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="ui_batch_geocoding_dialog.py" line="102"/>
+        <location filename="ui_batch_geocoding_dialog.py" line="119"/>
         <source>Address:</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="batch_geocoding_dialog.py" line="106"/>
+        <location filename="batch_geocoding_dialog.py" line="111"/>
         <source>RuGeocoder</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="batch_geocoding_dialog.py" line="84"/>
+        <location filename="batch_geocoding_dialog.py" line="78"/>
         <source>You need to choose a point layer!</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="batch_geocoding_dialog.py" line="88"/>
+        <location filename="batch_geocoding_dialog.py" line="94"/>
         <source>You need to enter the city name!</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="batch_geocoding_dialog.py" line="92"/>
+        <location filename="batch_geocoding_dialog.py" line="98"/>
         <source>You need to select the field containing the names of cities!</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="batch_geocoding_dialog.py" line="96"/>
+        <location filename="batch_geocoding_dialog.py" line="90"/>
         <source>You need to select the field containing the names of districts!</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="batch_geocoding_dialog.py" line="100"/>
+        <location filename="batch_geocoding_dialog.py" line="82"/>
         <source>You need to select the field containing the addresses!</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="batch_geocoding_dialog.py" line="106"/>
+        <location filename="batch_geocoding_dialog.py" line="111"/>
         <source>Layer is not in edit mode! Please start editing the layer!</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="batch_geocoding_dialog.py" line="183"/>
+        <location filename="batch_geocoding_dialog.py" line="199"/>
         <source>Geocoding successfully completed</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="batch_geocoding_dialog.py" line="183"/>
+        <location filename="batch_geocoding_dialog.py" line="199"/>
         <source>Geoceded %1 features for %2 seconds</source>
         <translation type="unfinished"></translation>
     </message>
@@ -63,48 +63,63 @@
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="ui_batch_geocoding_dialog.py" line="36"/>
+        <location filename="ui_batch_geocoding_dialog.py" line="191"/>
         <source>Region:</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="ui_batch_geocoding_dialog.py" line="44"/>
-        <source>City:</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location filename="ui_batch_geocoding_dialog.py" line="48"/>
+        <location filename="ui_batch_geocoding_dialog.py" line="129"/>
         <source>District:</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="ui_batch_geocoding_dialog.py" line="72"/>
+        <location filename="ui_batch_geocoding_dialog.py" line="73"/>
         <source>Layer:</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="ui_batch_geocoding_dialog.py" line="80"/>
+        <location filename="ui_batch_geocoding_dialog.py" line="151"/>
         <source>Geocoder:</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="ui_batch_geocoding_dialog.py" line="93"/>
+        <location filename="ui_batch_geocoding_dialog.py" line="142"/>
         <source>Run</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="ui_batch_geocoding_dialog.py" line="108"/>
+        <location filename="ui_batch_geocoding_dialog.py" line="195"/>
         <source>Build. num:</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="ui_batch_geocoding_dialog.py" line="158"/>
+        <location filename="ui_batch_geocoding_dialog.py" line="162"/>
         <source>Name</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="ui_batch_geocoding_dialog.py" line="163"/>
+        <location filename="ui_batch_geocoding_dialog.py" line="167"/>
         <source>From field</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="batch_geocoding_dialog.py" line="86"/>
+        <source>You need to enter the district name!</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="batch_geocoding_dialog.py" line="102"/>
+        <source>You need to select the field containing the names of streets!</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="batch_geocoding_dialog.py" line="106"/>
+        <source>You need to select the field containing the numbers of buildings!</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="ui_batch_geocoding_dialog.py" line="125"/>
+        <source>Settlement:</source>
         <translation type="unfinished"></translation>
     </message>
 </context>
@@ -181,16 +196,6 @@
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="converter_dialog.py" line="88"/>
-        <source>SHP file with the same name already exists.<byte value="xd"/> Do you want to overwrite it?</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location filename="converter_dialog.py" line="99"/>
-        <source>Output SHP file can&apos;t be created!<byte value="xd"/>%1</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
         <location filename="converter_dialog.py" line="181"/>
         <source>Unable to create a field %1!</source>
         <translation type="unfinished"></translation>
@@ -208,6 +213,18 @@
     <message>
         <location filename="ui_converter_dialog.py" line="57"/>
         <source>Add shp file to the canvas</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="converter_dialog.py" line="88"/>
+        <source>SHP file with the same name already exists.
+ Do you want to overwrite it?</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="converter_dialog.py" line="99"/>
+        <source>Output SHP file can&apos;t be created!
+%1</source>
         <translation type="unfinished"></translation>
     </message>
 </context>

@@ -86,7 +86,7 @@ class ConverterDialog(QDialog, Ui_ConverterDialog):
         #check output datasource exists
         if path.exists(out_path):
             if QMessageBox.question(self,  self.tr("RuGeocoder"),  
-                                    self.tr("SHP file with the same name already exists.\r Do you want to overwrite it?"), 
+                                    self.tr("SHP file with the same name already exists.\n Do you want to overwrite it?"), 
                                     QMessageBox.Yes | QMessageBox.Cancel) == QMessageBox.Yes:
                 drv.DeleteDataSource(out_path)
             else:
@@ -96,7 +96,7 @@ class ConverterDialog(QDialog, Ui_ConverterDialog):
         gdal.ErrorReset()
         output_data_source = drv.CreateDataSource(out_path)
         if output_data_source==None:
-            self.__show_err(self.tr("Output SHP file can't be created!\r%1")
+            self.__show_err(self.tr("Output SHP file can't be created!\n%1")
                                      .arg(unicode(gdal.GetLastErrorMsg())))
             return
 

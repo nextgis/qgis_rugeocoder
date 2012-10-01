@@ -4,57 +4,57 @@
 <context>
     <name>BatchGeocodingDialog</name>
     <message>
-        <location filename="batch_geocoding_dialog.py" line="60"/>
+        <location filename="ui_batch_geocoding_dialog.py" line="53"/>
         <source>Street:</source>
         <translation>Улица:</translation>
     </message>
     <message>
-        <location filename="ui_batch_geocoding_dialog.py" line="102"/>
+        <location filename="ui_batch_geocoding_dialog.py" line="119"/>
         <source>Address:</source>
         <translation>Адрес:</translation>
     </message>
     <message>
-        <location filename="batch_geocoding_dialog.py" line="106"/>
+        <location filename="batch_geocoding_dialog.py" line="111"/>
         <source>RuGeocoder</source>
         <translation>RuGeocoder</translation>
     </message>
     <message>
-        <location filename="batch_geocoding_dialog.py" line="84"/>
+        <location filename="batch_geocoding_dialog.py" line="78"/>
         <source>You need to choose a point layer!</source>
         <translation>Необходимо выбрать точечный слой!</translation>
     </message>
     <message>
-        <location filename="batch_geocoding_dialog.py" line="88"/>
+        <location filename="batch_geocoding_dialog.py" line="94"/>
         <source>You need to enter the city name!</source>
         <translation>Наобходимо ввести название города!</translation>
     </message>
     <message>
-        <location filename="batch_geocoding_dialog.py" line="92"/>
+        <location filename="batch_geocoding_dialog.py" line="98"/>
         <source>You need to select the field containing the names of cities!</source>
-        <translation>Необходимо выбрать поле, содержащее имена городов!</translation>
+        <translation>Необходимо выбрать поле, содержащее названия городов!</translation>
     </message>
     <message>
-        <location filename="batch_geocoding_dialog.py" line="96"/>
+        <location filename="batch_geocoding_dialog.py" line="90"/>
         <source>You need to select the field containing the names of districts!</source>
-        <translation>Необходимо выбрать поле, содержащее имена районов!</translation>
+        <translation>Необходимо выбрать поле, содержащее названия районов!</translation>
     </message>
     <message>
-        <location filename="batch_geocoding_dialog.py" line="100"/>
+        <location filename="batch_geocoding_dialog.py" line="82"/>
         <source>You need to select the field containing the addresses!</source>
         <translation>Необходимо выбрать поле, содержащее адреса!</translation>
     </message>
     <message>
-        <location filename="batch_geocoding_dialog.py" line="106"/>
+        <location filename="batch_geocoding_dialog.py" line="111"/>
         <source>Layer is not in edit mode! Please start editing the layer!</source>
         <translation>Слой не в режиме редактирования! Пожалуйста, начните редактирование слоя!</translation>
     </message>
     <message>
-        <location filename="batch_geocoding_dialog.py" line="183"/>
+        <location filename="batch_geocoding_dialog.py" line="199"/>
         <source>Geocoding successfully completed</source>
         <translation>Гекодирование успешно закончено</translation>
     </message>
     <message>
-        <location filename="batch_geocoding_dialog.py" line="183"/>
+        <location filename="batch_geocoding_dialog.py" line="199"/>
         <source>Geoceded %1 features for %2 seconds</source>
         <translation>Геокодированно %1 объектов за %2 секунд</translation>
     </message>
@@ -64,49 +64,69 @@
         <translation>Пакетное геокодирование</translation>
     </message>
     <message>
-        <location filename="ui_batch_geocoding_dialog.py" line="36"/>
+        <location filename="ui_batch_geocoding_dialog.py" line="191"/>
         <source>Region:</source>
         <translation>Регион:</translation>
     </message>
     <message>
         <location filename="ui_batch_geocoding_dialog.py" line="44"/>
         <source>City:</source>
-        <translation>Город:</translation>
+        <translation type="obsolete">Город:</translation>
     </message>
     <message>
-        <location filename="ui_batch_geocoding_dialog.py" line="48"/>
+        <location filename="ui_batch_geocoding_dialog.py" line="129"/>
         <source>District:</source>
         <translation>Район:</translation>
     </message>
     <message>
-        <location filename="ui_batch_geocoding_dialog.py" line="72"/>
+        <location filename="ui_batch_geocoding_dialog.py" line="73"/>
         <source>Layer:</source>
         <translation>Слой:</translation>
     </message>
     <message>
-        <location filename="ui_batch_geocoding_dialog.py" line="80"/>
+        <location filename="ui_batch_geocoding_dialog.py" line="151"/>
         <source>Geocoder:</source>
         <translation>Геокодер:</translation>
     </message>
     <message>
-        <location filename="ui_batch_geocoding_dialog.py" line="93"/>
+        <location filename="ui_batch_geocoding_dialog.py" line="142"/>
         <source>Run</source>
         <translation>Пуск</translation>
     </message>
     <message>
-        <location filename="ui_batch_geocoding_dialog.py" line="108"/>
+        <location filename="ui_batch_geocoding_dialog.py" line="195"/>
         <source>Build. num:</source>
         <translation>Номер здания:</translation>
     </message>
     <message>
-        <location filename="ui_batch_geocoding_dialog.py" line="158"/>
+        <location filename="ui_batch_geocoding_dialog.py" line="162"/>
         <source>Name</source>
         <translation>Название</translation>
     </message>
     <message>
-        <location filename="ui_batch_geocoding_dialog.py" line="163"/>
+        <location filename="ui_batch_geocoding_dialog.py" line="167"/>
         <source>From field</source>
         <translation>Из поля</translation>
+    </message>
+    <message>
+        <location filename="batch_geocoding_dialog.py" line="86"/>
+        <source>You need to enter the district name!</source>
+        <translation>Наобходимо ввести название района!</translation>
+    </message>
+    <message>
+        <location filename="batch_geocoding_dialog.py" line="102"/>
+        <source>You need to select the field containing the names of streets!</source>
+        <translation>Необходимо выбрать поле, содержащее названия улиц!</translation>
+    </message>
+    <message>
+        <location filename="batch_geocoding_dialog.py" line="106"/>
+        <source>You need to select the field containing the numbers of buildings!</source>
+        <translation>Необходимо выбрать поле, содержащее номера зданий!</translation>
+    </message>
+    <message>
+        <location filename="ui_batch_geocoding_dialog.py" line="125"/>
+        <source>Settlement:</source>
+        <translation>Нас. пункт:</translation>
     </message>
 </context>
 <context>
@@ -189,14 +209,14 @@
     </message>
     <message>
         <location filename="converter_dialog.py" line="88"/>
-        <source>SHP file with the same name already exists. Do you want to overwrite it?</source>
-        <translation>SHP файл с таким именем уже существует.
+        <source>SHP file with the same name already exists. Do you want to overwrite it?</source>
+        <translation type="obsolete">SHP файл с таким именем уже существует.
 Вы хотите перезаписать его?</translation>
     </message>
     <message>
         <location filename="converter_dialog.py" line="99"/>
-        <source>Output SHP file can&apos;t be created!%1</source>
-        <translation>Результирующий SHP файл не может быть создан!
+        <source>Output SHP file can&apos;t be created!%1</source>
+        <translation type="obsolete">Результирующий SHP файл не может быть создан!
 %1</translation>
     </message>
     <message>
@@ -218,6 +238,20 @@
         <location filename="ui_converter_dialog.py" line="57"/>
         <source>Add shp file to the canvas</source>
         <translation>Добавить SHP файл на карту</translation>
+    </message>
+    <message>
+        <location filename="converter_dialog.py" line="88"/>
+        <source>SHP file with the same name already exists.
+ Do you want to overwrite it?</source>
+        <translation>SHP файл с таким именем уже существует.
+ Вы хотите перезаписать его?</translation>
+    </message>
+    <message>
+        <location filename="converter_dialog.py" line="99"/>
+        <source>Output SHP file can&apos;t be created!
+%1</source>
+        <translation>Результирующий SHP файл не может быть создан!
+%1</translation>
     </message>
 </context>
 <context>
