@@ -63,7 +63,7 @@
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="ui_batch_geocoding_dialog.py" line="191"/>
+        <location filename="ui_batch_geocoding_dialog.py" line="190"/>
         <source>Region:</source>
         <translation type="unfinished"></translation>
     </message>
@@ -88,7 +88,7 @@
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="ui_batch_geocoding_dialog.py" line="195"/>
+        <location filename="ui_batch_geocoding_dialog.py" line="194"/>
         <source>Build. num:</source>
         <translation type="unfinished"></translation>
     </message>
@@ -146,17 +146,17 @@
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="converter_dialog.py" line="187"/>
+        <location filename="converter_dialog.py" line="194"/>
         <source>RuGeocoder error</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="converter_dialog.py" line="160"/>
+        <location filename="converter_dialog.py" line="150"/>
         <source>RuGeocoder</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="converter_dialog.py" line="160"/>
+        <location filename="converter_dialog.py" line="150"/>
         <source>Converting successfully completed</source>
         <translation type="unfinished"></translation>
     </message>
@@ -166,17 +166,17 @@
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="ui_converter_dialog.py" line="70"/>
+        <location filename="ui_converter_dialog.py" line="57"/>
         <source>Input CSV file:</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="ui_converter_dialog.py" line="37"/>
+        <location filename="ui_converter_dialog.py" line="71"/>
         <source>...</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="ui_converter_dialog.py" line="81"/>
+        <location filename="ui_converter_dialog.py" line="79"/>
         <source>Output SHP file:</source>
         <translation type="unfinished"></translation>
     </message>
@@ -196,22 +196,22 @@
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="converter_dialog.py" line="181"/>
+        <location filename="converter_dialog.py" line="188"/>
         <source>Unable to create a field %1!</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="converter_dialog.py" line="143"/>
+        <location filename="converter_dialog.py" line="133"/>
         <source>Unable to construct the feature!</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="converter_dialog.py" line="151"/>
+        <location filename="converter_dialog.py" line="141"/>
         <source>Failed to create feature in SHP file!</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="ui_converter_dialog.py" line="57"/>
+        <location filename="ui_converter_dialog.py" line="66"/>
         <source>Add shp file to the canvas</source>
         <translation type="unfinished"></translation>
     </message>
@@ -225,6 +225,11 @@
         <location filename="converter_dialog.py" line="99"/>
         <source>Output SHP file can&apos;t be created!
 %1</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="ui_converter_dialog.py" line="87"/>
+        <source>Add additional fields</source>
         <translation type="unfinished"></translation>
     </message>
 </context>

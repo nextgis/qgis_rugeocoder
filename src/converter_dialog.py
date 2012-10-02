@@ -120,18 +120,8 @@ class ConverterDialog(QDialog, Ui_ConverterDialog):
                 return
 
         #add geocoder additional fields
-        out_defs = output_layer.GetLayerDefn()
-        if out_defs.GetFieldIndex("settlement") < 0:
-            if not self.__add_field(output_layer, "settlement", ogr.OFTString,  300):
-                return
-        if out_defs.GetFieldIndex("street") < 0:
-            if not self.__add_field(output_layer, "street", ogr.OFTString,  300):
-                return
-        if out_defs.GetFieldIndex("house_num") < 0:
-            if not self.__add_field(output_layer, "house_num", ogr.OFTString,  300):
-                return
-        if out_defs.GetFieldIndex("geocoded") < 0:
-            if not self.__add_field(output_layer, "geocoded", ogr.OFTString,  300):
+        if self.chkAddAdditionalFields.isChecked():
+            if not self.add_additional_fields(output_layer):
                 return
 
         in_feat = csv_layer.GetNextFeature()
@@ -172,7 +162,24 @@ class ConverterDialog(QDialog, Ui_ConverterDialog):
             return True
         else:
             return False
-        
+            
+    def add_additional_fields(self,  output_layer):
+        out_defs = output_layer.GetLayerDefn()
+        if out_defs.GetFieldIndex("settlement") < 0:
+            if not self.__add_field(output_layer, "settlement", ogr.OFTString,  250):
+                return False
+        if out_defs.GetFieldIndex("street") < 0:
+            if not self.__add_field(output_layer, "street", ogr.OFTString,  250):
+                return False
+        if out_defs.GetFieldIndex("building_num") < 0:
+            if not self.__add_field(output_layer, "building_num", ogr.OFTString,  250):
+                return False
+        if out_defs.GetFieldIndex("geocoded") < 0:
+            if not self.__add_field(output_layer, "geocoded", ogr.OFTString,  250):
+                return False
+        return True
+ 
+
     def __add_field(self,  layer, field_name,   field_type=ogr.OFTString,  field_len=None):
         field_def = ogr.FieldDefn(field_name, field_type)
         if field_len:
