@@ -24,6 +24,6 @@ cd $BUILD_DIR
 VER=`grep "version=" ./$PLUGIN_NAME/metadata.txt | sed 's/version=//'`
 
 #Zip dir
-zip -r $PLUGIN_NAME"_"$VER.zip ./$PLUGIN_NAME
+zip -9 -r $PLUGIN_NAME"_"$VER.zip ./$PLUGIN_NAME
 
 echo "Pack for upload: $BUILD_DIR/$PLUGIN_NAME"_"$VER.zip"
