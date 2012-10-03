@@ -107,6 +107,10 @@ class BatchGeocodingDialog(QDialog, Ui_BatchGeocodingDialog):
             return
 
         layer = get_vector_layer_by_name(self.cmbLayer.currentText())
+        if not layer:
+            QMessageBox.critical(self, self.tr("RuGeocoder"),
+                                 self.tr("Selected layer was not found! Maybe it was removed from the project. Please select another layer."))
+            return
         if not layer.isEditable():
             QMessageBox.warning(self, self.tr("RuGeocoder"),
                                  self.tr("Layer is not in edit mode! Please start editing the layer!"))
