@@ -4,12 +4,15 @@
 name=RuGeocoder
 qgisMinimumVersion=1.6
 description=Geocode your csv files to shp (Russia only)
-version=0.3.2
+version=0.3.3
 
 
 # Optional items:
 
-changelog: 0.3.2   'Add layer to canvas' chkbox added
+changelog: 0.3.3   'Add additional fields' chkbox added
+        More flexible settings for geocoding
+        Fix small errors
+    0.3.2   'Add layer to canvas' chkbox added
         Fixed forms sizes on Windows
         Added russian accept-language for OSM requests
         Only one opened plugin window now
