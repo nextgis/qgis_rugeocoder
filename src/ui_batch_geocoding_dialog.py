@@ -2,7 +2,7 @@
 
 # Form implementation generated from reading ui file './batch_geocoding_dialog.ui'
 #
-# Created: Mon Oct  1 17:55:57 2012
+# Created: Wed Oct  3 13:43:25 2012
 #      by: PyQt4 UI code generator 4.8.6
 #
 # WARNING! All changes made in this file will be lost!
@@ -17,16 +17,10 @@ except AttributeError:
 class Ui_BatchGeocodingDialog(object):
     def setupUi(self, BatchGeocodingDialog):
         BatchGeocodingDialog.setObjectName(_fromUtf8("BatchGeocodingDialog"))
-        BatchGeocodingDialog.resize(436, 381)
-        sizePolicy = QtGui.QSizePolicy(QtGui.QSizePolicy.Preferred, QtGui.QSizePolicy.Preferred)
-        sizePolicy.setHorizontalStretch(0)
-        sizePolicy.setVerticalStretch(0)
-        sizePolicy.setHeightForWidth(BatchGeocodingDialog.sizePolicy().hasHeightForWidth())
-        BatchGeocodingDialog.setSizePolicy(sizePolicy)
+        BatchGeocodingDialog.resize(436, 392)
         BatchGeocodingDialog.setWindowTitle(QtGui.QApplication.translate("BatchGeocodingDialog", "Batch geocoding", None, QtGui.QApplication.UnicodeUTF8))
         BatchGeocodingDialog.setSizeGripEnabled(False)
         self.gridLayout = QtGui.QGridLayout(BatchGeocodingDialog)
-        self.gridLayout.setContentsMargins(-1, -1, -1, 4)
         self.gridLayout.setObjectName(_fromUtf8("gridLayout"))
         self.line_3 = QtGui.QFrame(BatchGeocodingDialog)
         self.line_3.setFrameShape(QtGui.QFrame.HLine)
@@ -91,19 +85,9 @@ class Ui_BatchGeocodingDialog(object):
         self.gridLayout_3.addWidget(self.rbSettlField, 2, 0, 1, 1)
         self.cmbSettlField = QtGui.QComboBox(self.frmSettlement)
         self.cmbSettlField.setEnabled(False)
-        sizePolicy = QtGui.QSizePolicy(QtGui.QSizePolicy.Preferred, QtGui.QSizePolicy.Preferred)
-        sizePolicy.setHorizontalStretch(0)
-        sizePolicy.setVerticalStretch(0)
-        sizePolicy.setHeightForWidth(self.cmbSettlField.sizePolicy().hasHeightForWidth())
-        self.cmbSettlField.setSizePolicy(sizePolicy)
         self.cmbSettlField.setObjectName(_fromUtf8("cmbSettlField"))
         self.gridLayout_3.addWidget(self.cmbSettlField, 2, 1, 1, 1)
         self.txtSettlName = QtGui.QLineEdit(self.frmSettlement)
-        sizePolicy = QtGui.QSizePolicy(QtGui.QSizePolicy.Expanding, QtGui.QSizePolicy.Preferred)
-        sizePolicy.setHorizontalStretch(0)
-        sizePolicy.setVerticalStretch(0)
-        sizePolicy.setHeightForWidth(self.txtSettlName.sizePolicy().hasHeightForWidth())
-        self.txtSettlName.setSizePolicy(sizePolicy)
         self.txtSettlName.setObjectName(_fromUtf8("txtSettlName"))
         self.gridLayout_3.addWidget(self.txtSettlName, 0, 1, 1, 1)
         self.gridLayout.addWidget(self.frmSettlement, 8, 1, 1, 3)
@@ -169,20 +153,10 @@ class Ui_BatchGeocodingDialog(object):
         self.rbDistrictField.setObjectName(_fromUtf8("rbDistrictField"))
         self.gridLayout_2.addWidget(self.rbDistrictField, 2, 0, 1, 1)
         self.txtDistrictName = QtGui.QLineEdit(self.frmDistrict)
-        sizePolicy = QtGui.QSizePolicy(QtGui.QSizePolicy.Expanding, QtGui.QSizePolicy.Preferred)
-        sizePolicy.setHorizontalStretch(0)
-        sizePolicy.setVerticalStretch(0)
-        sizePolicy.setHeightForWidth(self.txtDistrictName.sizePolicy().hasHeightForWidth())
-        self.txtDistrictName.setSizePolicy(sizePolicy)
         self.txtDistrictName.setObjectName(_fromUtf8("txtDistrictName"))
         self.gridLayout_2.addWidget(self.txtDistrictName, 0, 1, 1, 1)
         self.cmbDistrictField = QtGui.QComboBox(self.frmDistrict)
         self.cmbDistrictField.setEnabled(False)
-        sizePolicy = QtGui.QSizePolicy(QtGui.QSizePolicy.Preferred, QtGui.QSizePolicy.Preferred)
-        sizePolicy.setHorizontalStretch(0)
-        sizePolicy.setVerticalStretch(0)
-        sizePolicy.setHeightForWidth(self.cmbDistrictField.sizePolicy().hasHeightForWidth())
-        self.cmbDistrictField.setSizePolicy(sizePolicy)
         self.cmbDistrictField.setObjectName(_fromUtf8("cmbDistrictField"))
         self.gridLayout_2.addWidget(self.cmbDistrictField, 2, 1, 1, 1)
         self.gridLayout.addWidget(self.frmDistrict, 6, 1, 1, 3)

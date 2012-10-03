@@ -37,6 +37,8 @@ class ConverterDialog(QDialog, Ui_ConverterDialog):
     def __init__(self):
         QDialog.__init__(self)
         self.setupUi(self)
+        self.setFixedSize(self.size())
+
 
         #SIGNALS
         QObject.connect(self.btnSelectCsv, SIGNAL("clicked()"), self.select_csv)
