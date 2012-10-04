@@ -20,6 +20,7 @@
 """
    
 import sys
+from urllib2 import URLError
 from datetime import datetime
 
 from osm_geocoder import OsmGeocoder
@@ -180,7 +181,27 @@ class BatchGeocodingDialog(QDialog, Ui_BatchGeocodingDialog):
                 build_num = None
 
             #geocode
-            pt, desc = coder.geocode(region, district, settl, street, build_num)
+            try:
+                pt, desc = coder.geocode(region, district, settl, street, build_num)
+            except URLError:
+                if QMessageBox.critical(self, self.tr("RuGeocoder"),
+                            (self.tr("Network error!\n%1\nIgnore the error and continue?")).arg(unicode(sys.exc_info()[1])),
+                            QMessageBox.Ignore |  QMessageBox.Cancel) == QMessageBox.Ignore:
+                    self.prgProcess.setValue(self.prgProcess.value() + 1)
+                    continue
+                else:
+                    self.prgProcess.setValue(0)
+                    return
+            except Exception:
+                if QMessageBox.critical(self, self.tr("RuGeocoder"),
+                            (self.tr("Error of processing!\n%1: %2\nIgnore the error and continue?"))
+                            .arg(unicode(sys.exc_info()[0].__name__)).arg(unicode(sys.exc_info()[1])),
+                            QMessageBox.Ignore |  QMessageBox.Cancel) == QMessageBox.Ignore:
+                    self.prgProcess.setValue(self.prgProcess.value() + 1)
+                    continue
+                else:
+                    self.prgProcess.setValue(0)
+                    return
 
             #set geom
             layer.changeGeometry(feat.id(), QgsGeometry.fromPoint(pt)) 
