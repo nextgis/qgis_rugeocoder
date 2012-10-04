@@ -54,6 +54,14 @@ class BatchGeocodingDialog(QDialog, Ui_BatchGeocodingDialog):
             self.cmbRegion.addItem(region['name'],  region)
 
 
+    def __select_relevant_index(self, fields, values):
+        for value in values:
+            for field in fields:
+                if value.lower() in field.lower():
+                    return  fields.index(field)       
+        return 0
+        
+        
     def fill_form(self, layer_name):
         layer = get_vector_layer_by_name(layer_name)        
         str_fields = get_layer_str_fields(layer)
@@ -71,6 +79,13 @@ class BatchGeocodingDialog(QDialog, Ui_BatchGeocodingDialog):
         self.cmbSettlField.addItems(str_fields)
         self.cmbStreet.addItems(str_fields)
         self.cmbBuildingNum.addItems(all_fields)
+        
+        #magic
+        self.cmbAddress.setCurrentIndex(self.__select_relevant_index(str_fields,  ["address", "addr"]))
+        self.cmbDistrictField.setCurrentIndex(self.__select_relevant_index(str_fields,  ["district",  "dist",  "rayon"]))
+        self.cmbSettlField.setCurrentIndex(self.__select_relevant_index(str_fields,  ["settlement",  "city", "town",  "settl" ]))
+        self.cmbStreet.setCurrentIndex(self.__select_relevant_index(str_fields,  ["street",  "st"]))
+        self.cmbBuildingNum.setCurrentIndex(self.__select_relevant_index(all_fields,  ["building", "build", "bld", "bldg", "house", "number"]))
 
 
     def processing(self):
