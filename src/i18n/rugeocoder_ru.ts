@@ -14,47 +14,47 @@
         <translation>Адрес:</translation>
     </message>
     <message>
-        <location filename="batch_geocoding_dialog.py" line="115"/>
+        <location filename="batch_geocoding_dialog.py" line="211"/>
         <source>RuGeocoder</source>
         <translation>RuGeocoder</translation>
     </message>
     <message>
-        <location filename="batch_geocoding_dialog.py" line="78"/>
+        <location filename="batch_geocoding_dialog.py" line="94"/>
         <source>You need to choose a point layer!</source>
         <translation>Необходимо выбрать точечный слой!</translation>
     </message>
     <message>
-        <location filename="batch_geocoding_dialog.py" line="94"/>
+        <location filename="batch_geocoding_dialog.py" line="110"/>
         <source>You need to enter the city name!</source>
         <translation>Наобходимо ввести название города!</translation>
     </message>
     <message>
-        <location filename="batch_geocoding_dialog.py" line="98"/>
+        <location filename="batch_geocoding_dialog.py" line="114"/>
         <source>You need to select the field containing the names of cities!</source>
         <translation>Необходимо выбрать поле, содержащее названия городов!</translation>
     </message>
     <message>
-        <location filename="batch_geocoding_dialog.py" line="90"/>
+        <location filename="batch_geocoding_dialog.py" line="106"/>
         <source>You need to select the field containing the names of districts!</source>
         <translation>Необходимо выбрать поле, содержащее названия районов!</translation>
     </message>
     <message>
-        <location filename="batch_geocoding_dialog.py" line="82"/>
+        <location filename="batch_geocoding_dialog.py" line="98"/>
         <source>You need to select the field containing the addresses!</source>
         <translation>Необходимо выбрать поле, содержащее адреса!</translation>
     </message>
     <message>
-        <location filename="batch_geocoding_dialog.py" line="115"/>
+        <location filename="batch_geocoding_dialog.py" line="131"/>
         <source>Layer is not in edit mode! Please start editing the layer!</source>
         <translation>Слой не в режиме редактирования! Пожалуйста, начните редактирование слоя!</translation>
     </message>
     <message>
-        <location filename="batch_geocoding_dialog.py" line="203"/>
+        <location filename="batch_geocoding_dialog.py" line="239"/>
         <source>Geocoding successfully completed</source>
         <translation>Гекодирование успешно закончено</translation>
     </message>
     <message>
-        <location filename="batch_geocoding_dialog.py" line="203"/>
+        <location filename="batch_geocoding_dialog.py" line="239"/>
         <source>Geoceded %1 features for %2 seconds</source>
         <translation>Геокодированно %1 объектов за %2 секунд</translation>
     </message>
@@ -109,17 +109,17 @@
         <translation>Из поля</translation>
     </message>
     <message>
-        <location filename="batch_geocoding_dialog.py" line="86"/>
+        <location filename="batch_geocoding_dialog.py" line="102"/>
         <source>You need to enter the district name!</source>
         <translation>Наобходимо ввести название района!</translation>
     </message>
     <message>
-        <location filename="batch_geocoding_dialog.py" line="102"/>
+        <location filename="batch_geocoding_dialog.py" line="118"/>
         <source>You need to select the field containing the names of streets!</source>
         <translation>Необходимо выбрать поле, содержащее названия улиц!</translation>
     </message>
     <message>
-        <location filename="batch_geocoding_dialog.py" line="106"/>
+        <location filename="batch_geocoding_dialog.py" line="122"/>
         <source>You need to select the field containing the numbers of buildings!</source>
         <translation>Необходимо выбрать поле, содержащее номера зданий!</translation>
     </message>
@@ -129,9 +129,27 @@
         <translation>Нас. пункт:</translation>
     </message>
     <message>
-        <location filename="batch_geocoding_dialog.py" line="111"/>
+        <location filename="batch_geocoding_dialog.py" line="127"/>
         <source>Selected layer was not found! Maybe it was removed from the project. Please select another layer.</source>
         <translation>Выбранный слой не найден! Возможно он был удален из проекта. Выбирете другой слой.</translation>
+    </message>
+    <message>
+        <location filename="batch_geocoding_dialog.py" line="202"/>
+        <source>Network error!
+%1
+Ignore the error and continue?</source>
+        <translation>Ошибка передачи данных!
+%1
+Пропустить ошибку и продолжить обработку?</translation>
+    </message>
+    <message>
+        <location filename="batch_geocoding_dialog.py" line="211"/>
+        <source>Error of processing!
+%1: %2
+Ignore the error and continue?</source>
+        <translation type="unfinished">Ошибка обработки!
+%1: %2
+Пропустить ошибку и продолжить обработку?</translation>
     </message>
 </context>
 <context>
