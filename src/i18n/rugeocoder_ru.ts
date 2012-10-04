@@ -147,7 +147,7 @@ Ignore the error and continue?</source>
         <source>Error of processing!
 %1: %2
 Ignore the error and continue?</source>
-        <translation type="unfinished">Ошибка обработки!
+        <translation>Ошибка обработки!
 %1: %2
 Пропустить ошибку и продолжить обработку?</translation>
     </message>
