@@ -24,7 +24,7 @@ def name():
 def description():
     return "Geocode your csv files to shp (Russia only)"
 def version():
-    return "Version 0.3.5"
+    return "Version 0.3.6"
 def icon():
     return "icon.png"
 def qgisMinimumVersion():
@@ -32,3 +32,8 @@ def qgisMinimumVersion():
 def classFactory(iface):
     from ru_geocoder_plugin import RuGeocoderPlugin
     return RuGeocoderPlugin(iface)
+
+def author():
+    return "Nikulin Evgeniy"
+def email():
+    return "nikulin.e at gmail"
