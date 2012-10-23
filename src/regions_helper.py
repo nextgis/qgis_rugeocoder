@@ -19,17 +19,18 @@
  ***************************************************************************/
 """
 from os import path
-
+import sys
 try:
     from osgeo import ogr, osr,  gdal
 except ImportError:
     import ogr, osr,  gdal
 
-_current_path = path.abspath(path.dirname(__file__))
-_data_path=path.join(_current_path,"data.sqlite")
+_fs_encoding = sys.getfilesystemencoding()
+_current_path = unicode(path.abspath(path.dirname(__file__)), _fs_encoding)
+_data_path= path.join(_current_path, u"data.sqlite")
         
 def get_regions_names():
-    ds = ogr.Open(_data_path)
+    ds = ogr.Open(_data_path.encode('utf-8')) #maybe not worked on win + gdal<1.8
     layer = ds['region']
     regions = []
     feat = layer.GetNextFeature()
