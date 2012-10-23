@@ -24,6 +24,7 @@ except ImportError:
     import ogr, osr,  gdal
 
 import sys
+import locale
 from os import path
 
 from PyQt4.QtGui import QDialog, QMessageBox, QFileDialog
@@ -33,12 +34,14 @@ from qgis.core import QgsVectorLayer,  QgsMapLayerRegistry
 
 from ui_converter_dialog import Ui_ConverterDialog
 
+_fs_encoding = sys.getfilesystemencoding()
+_message_encoding = locale.getdefaultlocale()[1]
+
 class ConverterDialog(QDialog, Ui_ConverterDialog):
     def __init__(self):
         QDialog.__init__(self)
         self.setupUi(self)
         self.setFixedSize(self.size())
-
 
         #SIGNALS
         QObject.connect(self.btnSelectCsv, SIGNAL("clicked()"), self.select_csv)
@@ -70,9 +73,9 @@ class ConverterDialog(QDialog, Ui_ConverterDialog):
 
     def processing(self):
         #check user input
-        in_path = unicode(self.txtCsvPath.text()).encode("utf-8")        
-        out_path = unicode(self.txtShpPath.text()).encode("utf-8")
-        
+        in_path = unicode(self.txtCsvPath.text())
+        out_path = unicode(self.txtShpPath.text())
+
         if not in_path:
             self.__show_err(self.tr("Select input CSV file!"))
             return
@@ -82,7 +85,7 @@ class ConverterDialog(QDialog, Ui_ConverterDialog):
         if not path.exists(in_path):
             self.__show_err(self.tr("Selected CSV file not found!"))
             return
-        
+
         #prepare output data source
         drv = ogr.GetDriverByName("ESRI Shapefile")
         #check output datasource exists
@@ -90,26 +93,26 @@ class ConverterDialog(QDialog, Ui_ConverterDialog):
             if QMessageBox.question(self,  self.tr("RuGeocoder"),  
                                     self.tr("SHP file with the same name already exists.\n Do you want to overwrite it?"), 
                                     QMessageBox.Yes | QMessageBox.Cancel) == QMessageBox.Yes:
-                drv.DeleteDataSource(out_path)
+                drv.DeleteDataSource(out_path.encode('utf-8'))
             else:
                 return
-        
+
         #create output shp file
         gdal.ErrorReset()
-        output_data_source = drv.CreateDataSource(out_path)
+        output_data_source = drv.CreateDataSource(out_path.encode('utf-8'))
         if output_data_source==None:
             self.__show_err(self.tr("Output SHP file can't be created!\n%1")
-                                     .arg(unicode(gdal.GetLastErrorMsg())))
+                                     .arg(unicode(gdal.GetLastErrorMsg(), _message_encoding)))
             return
 
         wgs_sr = osr.SpatialReference()
         wgs_sr.ImportFromEPSG(4326)
 
         layer_name = path.splitext(path.basename(out_path))[0]
-        output_layer = output_data_source.CreateLayer( layer_name, srs = wgs_sr, geom_type = ogr.wkbPoint )
+        output_layer = output_data_source.CreateLayer( layer_name.encode('utf-8'), srs = wgs_sr, geom_type = ogr.wkbPoint )
 
         #copy fields
-        input_data_source = ogr.Open(in_path)
+        input_data_source = ogr.Open(in_path.encode('utf-8'))
         csv_layer = input_data_source[0]
 
         csv_feat_defs = csv_layer.GetLayerDefn()
