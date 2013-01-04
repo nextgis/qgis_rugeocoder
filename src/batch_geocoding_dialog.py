@@ -24,6 +24,7 @@ from urllib2 import URLError
 from datetime import datetime
 
 from osm_geocoder import OsmGeocoder
+from osm_ru_geocoder import OsmRuGeocoder
 from google_geocoder import GoogleGeocoder
 from yandex_geocoder import YandexGeocoder
 
@@ -48,7 +49,7 @@ class BatchGeocodingDialog(QDialog, Ui_BatchGeocodingDialog):
         QObject.connect(self.cmbLayer, SIGNAL( "currentIndexChanged(QString)"), self.fill_form)
         
         #INIT CONTROLS VALUES
-        self.cmbGeocoder.addItems(["OSM", "Google", "Yandex"])
+        self.cmbGeocoder.addItems(["OSM", "OSM.RU", "Google", "Yandex"])
         self.cmbLayer.addItems(get_layer_names([QGis.Point]))
         for region in regions_helper.get_regions_names():
             self.cmbRegion.addItem(region['name'],  region)
@@ -151,6 +152,8 @@ class BatchGeocodingDialog(QDialog, Ui_BatchGeocodingDialog):
         #define geocoder
         if self.cmbGeocoder.currentText()=="OSM":
             coder = OsmGeocoder()
+        elif self.cmbGeocoder.currentText()=="OSM.RU":
+            coder = OsmRuGeocoder()
         elif self.cmbGeocoder.currentText()=="Yandex":
             coder = YandexGeocoder()
         else:
