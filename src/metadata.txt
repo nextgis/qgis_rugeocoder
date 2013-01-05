@@ -4,12 +4,13 @@
 name=RuGeocoder
 qgisMinimumVersion=1.6
 description=Geocode your csv files to shp (Russia only)
-version=0.3.6
+version=0.3.7
 
 
 # Optional items:
 
-changelog: 0.3.6   Fix critical bugs with non-ascii paths
+changelog: 0.3.7   Openstreetmap.ru geocoder added
+    0.3.6   Fix critical bugs with non-ascii paths
     0.3.5   Fix critical bug
         Small improvements
     0.3.4   Fix critical bug
