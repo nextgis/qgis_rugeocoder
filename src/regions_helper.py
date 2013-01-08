@@ -44,7 +44,7 @@ def get_regions_names():
     return regions
 
 def get_specific_region_name(geocoder,  region_id):
-    ds = ogr.Open(_data_path)
+    ds = ogr.Open(_data_path.encode('utf-8'))
     layer_name = 'region_'+geocoder.lower().replace('.', '_')
     layer = ds.GetLayerByName(layer_name.encode('utf-8'))
     if layer == None:
