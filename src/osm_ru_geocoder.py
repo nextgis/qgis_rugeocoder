@@ -47,6 +47,9 @@ class OsmRuGeocoder():
     def _search(self, region, rayon, city, street, house_number):
         full_addr = self._construct_search_str(region, rayon, city, street, house_number)
         full_addr = urllib.quote(full_addr.encode("utf-8"))
+        if not full_addr:
+            #empty address
+            return None
         full_url = unicode(self.url) + unicode(full_addr, "utf-8")
         #QMessageBox.information(None, "Geocoding debug", full_url)
                 
