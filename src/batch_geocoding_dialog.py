@@ -18,7 +18,7 @@
  *                                                                         *
  ***************************************************************************/
 """
-   
+
 import sys
 from urllib2 import URLError
 from datetime import datetime
@@ -43,31 +43,29 @@ class BatchGeocodingDialog(QDialog, Ui_BatchGeocodingDialog):
         QDialog.__init__(self)
         self.setupUi(self)
         self.setFixedSize(self.size())
-        
+
         #SIGNALS
-        QObject.connect(self.btnRun, SIGNAL( "clicked()" ), self.processing)
-        QObject.connect(self.cmbLayer, SIGNAL( "currentIndexChanged(QString)"), self.fill_form)
-        
+        QObject.connect(self.btnRun, SIGNAL('clicked()'), self.processing)
+        QObject.connect(self.cmbLayer, SIGNAL('currentIndexChanged(QString)'), self.fill_form)
+
         #INIT CONTROLS VALUES
-        self.cmbGeocoder.addItems(["OSM", "OSM.RU", "Google", "Yandex"])
+        self.cmbGeocoder.addItems(['OSM', 'OSM.RU', 'Google', 'Yandex'])
         self.cmbLayer.addItems(get_layer_names([QGis.Point]))
         for region in regions_helper.get_regions_names():
             self.cmbRegion.addItem(region['name'],  region)
-
 
     def __select_relevant_index(self, fields, values):
         for value in values:
             for field in fields:
                 if value.lower() in field.lower():
-                    return  fields.index(field)       
+                    return fields.index(field)
         return 0
-        
-        
+
     def fill_form(self, layer_name):
-        layer = get_vector_layer_by_name(layer_name)        
+        layer = get_vector_layer_by_name(layer_name)
         str_fields = get_layer_str_fields(layer)
         all_fields = get_layer_all_fields(layer)
-        
+
         #set cmb's
         self.cmbAddress.clear()
         self.cmbDistrictField.clear()
@@ -80,66 +78,72 @@ class BatchGeocodingDialog(QDialog, Ui_BatchGeocodingDialog):
         self.cmbSettlField.addItems(str_fields)
         self.cmbStreet.addItems(str_fields)
         self.cmbBuildingNum.addItems(all_fields)
-        
-        #magic
-        self.cmbAddress.setCurrentIndex(self.__select_relevant_index(str_fields,  ["address", "addr"]))
-        self.cmbDistrictField.setCurrentIndex(self.__select_relevant_index(str_fields,  ["district",  "dist",  "rayon"]))
-        self.cmbSettlField.setCurrentIndex(self.__select_relevant_index(str_fields,  ["settlement",  "city", "town",  "settl" ]))
-        self.cmbStreet.setCurrentIndex(self.__select_relevant_index(str_fields,  ["street",  "st"]))
-        self.cmbBuildingNum.setCurrentIndex(self.__select_relevant_index(all_fields,  ["building", "build", "bld", "bldg", "house", "number"]))
 
+        #magic
+        self.cmbAddress.setCurrentIndex(self.__select_relevant_index(str_fields,  ['address', 'addr']))
+        self.cmbDistrictField.setCurrentIndex(self.__select_relevant_index(str_fields,  ['district', 'dist', 'rayon']))
+        self.cmbSettlField.setCurrentIndex(self.__select_relevant_index(str_fields,  ['settlement', 'city', 'town',
+                                                                                      'settl']))
+        self.cmbStreet.setCurrentIndex(self.__select_relevant_index(str_fields,  ['street', 'st']))
+        self.cmbBuildingNum.setCurrentIndex(self.__select_relevant_index(all_fields,  ['building', 'build', 'bld',
+                                                                                       'bldg', 'house', 'number']))
 
     def processing(self):
         #checks
         if not self.cmbLayer.currentText():
-            QMessageBox.warning(self, self.tr("RuGeocoder"), self.tr("You need to choose a point layer!"))
+            QMessageBox.warning(self, self.tr('RuGeocoder'), self.tr('You need to choose a point layer!'))
             return
-            
-        if self.cmbAddress.isEnabled() and  not self.cmbAddress.currentText():
-            QMessageBox.warning(self, self.tr("RuGeocoder"), self.tr("You need to select the field containing the addresses!"))
+
+        if self.cmbAddress.isEnabled() and not self.cmbAddress.currentText():
+            QMessageBox.warning(self, self.tr('RuGeocoder'), self.tr(
+                'You need to select the field containing the addresses!'))
             return
 
         if self.chkDistrict.isChecked() and self.rbDisctrictName.isChecked() and not self.txtDistrictName.text():
-            QMessageBox.warning(self, self.tr("RuGeocoder"), self.tr("You need to enter the district name!"))
+            QMessageBox.warning(self, self.tr('RuGeocoder'), self.tr('You need to enter the district name!'))
             return
 
         if self.chkDistrict.isChecked() and self.rbDistrictField.isChecked() and not self.cmbDistrictField.currentText():
-            QMessageBox.warning(self, self.tr("RuGeocoder"), self.tr("You need to select the field containing the names of districts!"))
+            QMessageBox.warning(self, self.tr('RuGeocoder'), self.tr(
+                'You need to select the field containing the names of districts!'))
             return
 
         if self.chkSettlement.isChecked() and self.rbSettlName.isChecked() and not self.txtSettlName.text():
-            QMessageBox.warning(self, self.tr("RuGeocoder"), self.tr("You need to enter the city name!"))
+            QMessageBox.warning(self, self.tr('RuGeocoder'), self.tr('You need to enter the city name!'))
             return
 
         if self.chkSettlement.isChecked() and self.rbSettlField.isChecked() and not self.cmbSettlField.currentText():
-            QMessageBox.warning(self, self.tr("RuGeocoder"), self.tr("You need to select the field containing the names of cities!"))
+            QMessageBox.warning(self, self.tr('RuGeocoder'), self.tr(
+                'You need to select the field containing the names of cities!'))
             return
-            
+
         if self.chkStreet.isChecked() and not self.cmbStreet.currentText():
-            QMessageBox.warning(self, self.tr("RuGeocoder"), self.tr("You need to select the field containing the names of streets!"))
+            QMessageBox.warning(self, self.tr('RuGeocoder'), self.tr(
+                'You need to select the field containing the names of streets!'))
             return
-            
+
         if self.chkStreet.isChecked() and not self.cmbBuildingNum.currentText():
-            QMessageBox.warning(self, self.tr("RuGeocoder"), self.tr("You need to select the field containing the numbers of buildings!"))
+            QMessageBox.warning(self, self.tr('RuGeocoder'), self.tr(
+                'You need to select the field containing the numbers of buildings!'))
             return
 
         layer = get_vector_layer_by_name(self.cmbLayer.currentText())
         if not layer:
-            QMessageBox.critical(self, self.tr("RuGeocoder"),
-                                 self.tr("Selected layer was not found! Maybe it was removed from the project. Please select another layer."))
+            QMessageBox.critical(self, self.tr('RuGeocoder'), self.tr(
+                'Selected layer was not found! Maybe it was removed from the project. Please select another layer.'))
             return
         if not layer.isEditable():
-            QMessageBox.warning(self, self.tr("RuGeocoder"),
-                                 self.tr("Layer is not in edit mode! Please start editing the layer!"))
+            QMessageBox.warning(self, self.tr('RuGeocoder'),
+                                 self.tr('Layer is not in edit mode! Please start editing the layer!'))
             return
-        
+
         #setup ui
         data_provider = layer.dataProvider()
         features_for_update = data_provider.featureCount()
-        if  features_for_update > 0:
+        if features_for_update > 0:
             self.prgProcess.setMaximum(features_for_update)
             self.prgProcess.setValue(0)
-        start =  datetime.now()
+        start = datetime.now()
 
         #get num of fields
         addr_index = data_provider.fieldNameIndex(self.cmbAddress.currentText())
@@ -147,18 +151,18 @@ class BatchGeocodingDialog(QDialog, Ui_BatchGeocodingDialog):
         settl_index = data_provider.fieldNameIndex(self.cmbSettlField.currentText())
         street_index = data_provider.fieldNameIndex(self.cmbStreet.currentText())
         build_index = data_provider.fieldNameIndex(self.cmbBuildingNum.currentText())
-        geocoded_index = data_provider.fieldNameIndex("geocoded")
+        geocoded_index = data_provider.fieldNameIndex('geocoded')
 
         #define geocoder
-        if self.cmbGeocoder.currentText()=="OSM":
+        if self.cmbGeocoder.currentText() == 'OSM':
             coder = OsmGeocoder()
-        elif self.cmbGeocoder.currentText()=="OSM.RU":
+        elif self.cmbGeocoder.currentText() == 'OSM.RU':
             coder = OsmRuGeocoder()
-        elif self.cmbGeocoder.currentText()=="Yandex":
+        elif self.cmbGeocoder.currentText() == 'Yandex':
             coder = YandexGeocoder()
         else:
             coder = GoogleGeocoder()
-        
+
         #define region
         region = None
         if self.chkRegion.isChecked():
@@ -170,7 +174,7 @@ class BatchGeocodingDialog(QDialog, Ui_BatchGeocodingDialog):
         feat = QgsFeature()
         attrs = data_provider.attributeIndexes()
         data_provider.select(attrs, QgsRectangle(), False)
-        
+
         while data_provider.nextFeature(feat):
             #get values for geocoding
             attr_map = feat.attributeMap()
@@ -195,26 +199,26 @@ class BatchGeocodingDialog(QDialog, Ui_BatchGeocodingDialog):
                 street = unicode(attr_map[street_index].toString())
                 build_num = unicode(attr_map[build_index].toString())
             else:
-                street = addr #ugly! maybe need one more method for geocoders???
+                street = addr  # ugly! maybe need one more method for geocoders???
                 build_num = None
 
             #geocode
             try:
                 pt, desc = coder.geocode(region, district, settl, street, build_num)
             except URLError:
-                if QMessageBox.critical(self, self.tr("RuGeocoder"),
-                            (self.tr("Network error!\n%1\nIgnore the error and continue?")).arg(unicode(sys.exc_info()[1])),
-                            QMessageBox.Ignore |  QMessageBox.Cancel) == QMessageBox.Ignore:
+                if QMessageBox.critical(self, self.tr('RuGeocoder'),
+                            (self.tr('Network error!\n%1\nIgnore the error and continue?')).arg(unicode(sys.exc_info()[1])),
+                            QMessageBox.Ignore | QMessageBox.Cancel) == QMessageBox.Ignore:
                     self.prgProcess.setValue(self.prgProcess.value() + 1)
                     continue
                 else:
                     self.prgProcess.setValue(0)
                     return
             except Exception:
-                if QMessageBox.critical(self, self.tr("RuGeocoder"),
-                            (self.tr("Error of processing!\n%1: %2\nIgnore the error and continue?"))
+                if QMessageBox.critical(self, self.tr('RuGeocoder'),
+                            (self.tr('Error of processing!\n%1: %2\nIgnore the error and continue?'))
                             .arg(unicode(sys.exc_info()[0].__name__)).arg(unicode(sys.exc_info()[1])),
-                            QMessageBox.Ignore |  QMessageBox.Cancel) == QMessageBox.Ignore:
+                            QMessageBox.Ignore | QMessageBox.Cancel) == QMessageBox.Ignore:
                     self.prgProcess.setValue(self.prgProcess.value() + 1)
                     continue
                 else:
@@ -222,7 +226,7 @@ class BatchGeocodingDialog(QDialog, Ui_BatchGeocodingDialog):
                     return
 
             #set geom
-            layer.changeGeometry(feat.id(), QgsGeometry.fromPoint(pt)) 
+            layer.changeGeometry(feat.id(), QgsGeometry.fromPoint(pt))
 
             #set additional fields
             if geocoded_index >= 0:
@@ -239,8 +243,7 @@ class BatchGeocodingDialog(QDialog, Ui_BatchGeocodingDialog):
         else:
             total_sec = td.total_seconds()
 
-        QMessageBox.information(self, self.tr("Geocoding successfully completed"),
-                         self.tr("Geoceded %1 features for %2 seconds")
+        QMessageBox.information(self, self.tr('Geocoding successfully completed'),
+                         self.tr('Geoceded %1 features for %2 seconds')
                          .arg(unicode(features_for_update))
                          .arg(unicode(total_sec)))
-

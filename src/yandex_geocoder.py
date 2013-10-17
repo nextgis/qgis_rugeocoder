@@ -24,13 +24,14 @@ import urllib
 from qgis.core import QgsPoint
 #from PyQt4.QtGui import QMessageBox
 
+
 class YandexGeocoder():
     url = 'http://geocode-maps.yandex.ru/1.x/?key=APbJTE8BAAAAwUV4ZgIAWchAMdqatI8n3SLIv26SUw2telQAAAAAAAAAAABJnzuIcf3RGjjl50cTEPtvjEbW8w==&format=json&geocode='
     
     def _construct_search_str(self, region, rayon, city, street, house_number):
         search_str = ''
         if region:
-            search_str += region +', '
+            search_str += region + ', '
         if rayon:
             search_str += rayon+', '
         if city:
@@ -45,21 +46,19 @@ class YandexGeocoder():
         
     def geocode(self, region, rayon, city, street, house_number):
         full_addr = self._construct_search_str(region, rayon, city, street, house_number)
-        full_addr = urllib.quote(full_addr.encode("utf-8"))
-        full_url = unicode(self.url) + unicode(full_addr, "utf-8")
+        full_addr = urllib.quote(full_addr.encode('utf-8'))
+        full_url = unicode(self.url) + unicode(full_addr, 'utf-8')
         #QMessageBox.information(None, "Geocoding debug", full_url)
                 
-        f = urllib2.urlopen ( full_url.encode("utf-8") )
-        resp_str = unicode( f.read(),  'utf-8')
+        f = urllib2.urlopen(full_url.encode('utf-8'))
+        resp_str = unicode(f.read(),  'utf-8')
         resp_json = json.loads(resp_str)
                 
         if resp_json["response"]["GeoObjectCollection"]["featureMember"]:
             res0 = resp_json["response"]["GeoObjectCollection"]["featureMember"][0]
             pt_str = res0["GeoObject"]["Point"]["pos"]
-            pt = QgsPoint( float( pt_str.split(" ")[0] ) , float( pt_str.split(" ")[1] ))
+            pt = QgsPoint(float(pt_str.split(" ")[0]), float(pt_str.split(" ")[1]))
             return pt, res0["GeoObject"]["metaDataProperty"]["GeocoderMetaData"]["text"]
         else:
-            pt = QgsPoint( 0, 0)
+            pt = QgsPoint(0, 0)
             return pt, "Not found"
-        
-            

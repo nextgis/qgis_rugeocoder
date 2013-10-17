@@ -33,11 +33,11 @@ class OsmGeocoder():
         if house_number:
             search_str += house_number + ', '
         if street:
-            search_str += street+', '
+            search_str += street + ', '
         if city:
-            search_str += city+', '
+            search_str += city + ', '
         if rayon:
-            search_str += rayon+', '
+            search_str += rayon + ', '
         if region:
             search_str += region
         search_str = search_str.rstrip().rstrip(',')
@@ -49,7 +49,7 @@ class OsmGeocoder():
             return None
         result = ''
         for i in range(len(num)):
-            if num[i] >= '0' and num[i] <= '9':
+            if '0' <= num[i] <= '9':
                 result += num[i]
             else:
                 break
@@ -59,37 +59,36 @@ class OsmGeocoder():
         house_number_norm = self._normalize_num(house_number)
         #try search as is...
         full_addr = self._construct_search_str(region, rayon, city, street, house_number_norm)
-        full_addr = urllib.quote(full_addr.encode("utf-8"))
-        full_url = unicode(self.url) + unicode(full_addr, "utf-8")
-        f = urllib2.urlopen ( full_url.encode("utf-8") )
-        resp_str = unicode( f.read(),  'utf-8')
+        full_addr = urllib.quote(full_addr.encode('utf-8'))
+        full_url = unicode(self.url) + unicode(full_addr, 'utf-8')
+        f = urllib2.urlopen(full_url.encode('utf-8'))
+        resp_str = unicode(f.read(),  'utf-8')
         resp_json = json.loads(resp_str)
         if len(resp_json) == 1:
             #it is found
-            pt = QgsPoint( float(resp_json[0]["lon"]), float(resp_json[0]["lat"] ))
-            return pt, resp_json[0]["display_name"]
-        if len(resp_json)>1:
+            pt = QgsPoint(float(resp_json[0]['lon']), float(resp_json[0]['lat']))
+            return pt, resp_json[0]['display_name']
+        if len(resp_json) > 1:
             #multiple result
             for resp in resp_json:
-                if "address" in resp and "house_number" in resp["address"] and resp["address"]["house_number"].lower().strip() == house_number.lower().strip():
+                if 'address' in resp and 'house_number' in resp['address'] and resp['address']['house_number'].lower().strip() == house_number.lower().strip():
                     #right result
-                    pt = QgsPoint( float(resp["lon"]), float(resp["lat"] ))
-                    return pt, resp["display_name"]
+                    pt = QgsPoint(float(resp['lon']), float(resp['lat']))
+                    return pt, resp['display_name']
             # The right result is not found. Get first
-            pt = QgsPoint( float(resp_json[0]["lon"]), float(resp_json[0]["lat"] ))
-            return pt, resp_json[0]["display_name"]
+            pt = QgsPoint(float(resp_json[0]['lon']), float(resp_json[0]['lat']))
+            return pt, resp_json[0]['display_name']
         else:
             #try get street or town
             full_addr = self._construct_search_str(region, rayon, city, None, None)
-            full_addr = urllib.quote(full_addr.encode("utf-8"))
-            full_url = unicode(self.url) + unicode(full_addr, "utf-8")
-            f = urllib2.urlopen ( full_url.encode("utf-8") )
-            resp_str = unicode( f.read(),  'utf-8')
+            full_addr = urllib.quote(full_addr.encode('utf-8'))
+            full_url = unicode(self.url) + unicode(full_addr, 'utf-8')
+            f = urllib2.urlopen(full_url.encode('utf-8'))
+            resp_str = unicode(f.read(), 'utf-8')
             resp_json = json.loads(resp_str)
             if resp_json:
-                pt = QgsPoint( float(resp_json[0]["lon"]), float(resp_json[0]["lat"] ))
-                return pt, resp_json[0]["display_name"]
+                pt = QgsPoint(float(resp_json[0]['lon']), float(resp_json[0]['lat']))
+                return pt, resp_json[0]['display_name']
             else:
-                pt = QgsPoint( 0, 0)
-                return pt, "Not found"
-
+                pt = QgsPoint(0, 0)
+                return pt, 'Not found'

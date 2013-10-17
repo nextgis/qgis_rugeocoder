@@ -25,6 +25,7 @@ import urllib
 from qgis.core import QgsPoint
 #from PyQt4.QtGui import QMessageBox
 
+
 class GoogleGeocoder():
     url = 'http://maps.googleapis.com/maps/api/geocode/json?&language=ru&sensor=false&address='
 
@@ -33,11 +34,11 @@ class GoogleGeocoder():
         if house_number:
             search_str += house_number + ', '
         if street:
-            search_str += street+', '
+            search_str += street + ', '
         if city:
-            search_str += city+', '
+            search_str += city + ', '
         if rayon:
-            search_str += rayon+', '
+            search_str += rayon + ', '
         if region:
             search_str += region
         search_str = search_str.rstrip().rstrip(',')
@@ -45,20 +46,20 @@ class GoogleGeocoder():
         return search_str
 
     def geocode(self, region, rayon, city, street, house_number):
-        time.sleep(0.2) #antiban
+        time.sleep(0.2)  # antiban
         full_addr = self._construct_search_str(region, rayon, city, street, house_number)
-        full_addr = urllib.quote(full_addr.encode("utf-8"))
-        full_url = unicode(self.url) + unicode(full_addr, "utf-8")
+        full_addr = urllib.quote(full_addr.encode('utf-8'))
+        full_url = unicode(self.url) + unicode(full_addr, 'utf-8')
         #QMessageBox.information(None, "Geocoding debug", full_url)
 
-        f = urllib2.urlopen ( full_url.encode("utf-8") )
-        resp_str = unicode( f.read(),  'utf-8')
+        f = urllib2.urlopen(full_url.encode('utf-8'))
+        resp_str = unicode(f.read(),  'utf-8')
         resp_json = json.loads(resp_str)
 
-        if resp_json["results"]:
-            res0 = resp_json["results"][0]
-            pt = QgsPoint(float(res0["geometry"]["location"]["lng"] ), float(res0["geometry"]["location"]["lat"]))
-            return pt, res0["formatted_address"] 
+        if resp_json['results']:
+            res0 = resp_json['results'][0]
+            pt = QgsPoint(float(res0['geometry']['location']['lng']), float(res0['geometry']['location']['lat']))
+            return pt, res0['formatted_address']
         else:
-            pt = QgsPoint( 0, 0)
-            return pt, "Not found"
+            pt = QgsPoint(0, 0)
+            return pt, 'Not found'

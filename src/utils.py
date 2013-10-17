@@ -22,60 +22,59 @@
 from qgis.core import QgsMapLayerRegistry, QgsMapLayer
 
 
-
 def get_layer_all_fields(layer):
-    '''
+    """
     Return all fields for layer
     Use fTools code
-    '''
+    """
     field_map = layer.dataProvider().fields()
     field_list = []
     for num, field in field_map.iteritems():
-            field_list.append( unicode( field.name() ) )
-    return field_list # sorted( field_list, cmp=locale.strcoll ) 
+            field_list.append(unicode(field.name()))
+    return field_list  # sorted( field_list, cmp=locale.strcoll )
 
 
 def get_layer_str_fields(layer):
-    '''
+    """
     Return only string fields for layer
     Use fTools code
-    '''
+    """
     field_map = layer.dataProvider().fields()
     field_list = []
     for num, field in field_map.iteritems():
         if field.typeName() == 'String':
-            field_list.append( unicode( field.name() ) )
-    return field_list # sorted( field_list, cmp=locale.strcoll ) 
+            field_list.append(unicode(field.name()))
+    return field_list  # sorted( field_list, cmp=locale.strcoll )
      
 
-def get_layer_names( types ):
+def get_layer_names(types):
     """
     Return list of names of all layers in QgsMapLayerRegistry
     Use fTools code
     """
     layermap = QgsMapLayerRegistry.instance().mapLayers()
-    layerlist = []
+    layers_list = []
     if types == "all":
         for name, layer in layermap.iteritems():
-            layerlist.append( unicode( layer.name() ) )
+            layers_list.append(unicode(layer.name()))
     else:
         for name, layer in layermap.iteritems():
             if layer.type() == QgsMapLayer.VectorLayer:
                 if layer.geometryType() in types:
-                    layerlist.append( unicode( layer.name() ) )
+                    layers_list.append(unicode(layer.name()))
             elif layer.type() == QgsMapLayer.RasterLayer:
                 if "Raster" in types:
-                    layerlist.append( unicode( layer.name() ) )
-    return layerlist
+                    layers_list.append(unicode(layer.name()))
+    return layers_list
 
 
-def get_vector_layer_by_name( lyr_name ):
+def get_vector_layer_by_name(lyr_name):
     """
     Return QgsVectorLayer from a layer name ( as string )
     Use fTools code
     """
-    layermap = QgsMapLayerRegistry.instance().mapLayers()
-    for name, layer in layermap.iteritems():
+    layers_map = QgsMapLayerRegistry.instance().mapLayers()
+    for name, layer in layers_map.iteritems():
         if layer.type() == QgsMapLayer.VectorLayer and layer.name() == lyr_name:
             if layer.isValid():
                 return layer

@@ -23,14 +23,15 @@ import sys
 try:
     from osgeo import ogr, osr,  gdal
 except ImportError:
-    import ogr, osr,  gdal
+    import ogr, osr, gdal
 
 _fs_encoding = sys.getfilesystemencoding()
 _current_path = unicode(path.abspath(path.dirname(__file__)), _fs_encoding)
-_data_path= path.join(_current_path, u"data.sqlite")
-        
+_data_path = path.join(_current_path, u'data.sqlite')
+
+
 def get_regions_names():
-    ds = ogr.Open(_data_path.encode('utf-8')) #maybe not worked on win + gdal<1.8
+    ds = ogr.Open(_data_path.encode('utf-8'))  # maybe not worked on win + gdal<1.8
     layer = ds['region']
     regions = []
     feat = layer.GetNextFeature()
@@ -38,7 +39,7 @@ def get_regions_names():
         id = feat.GetFID()
         name = unicode(feat.GetField('name'), 'utf-8')
         is_town = feat.GetField('is_settlement')
-        regions.append({'id':id,  'name':name,  'is_settlement':is_town})
+        regions.append({'id': id,  'name': name,  'is_settlement': is_town})
         feat = layer.GetNextFeature()
     ds.Destroy()
     return regions
@@ -47,10 +48,10 @@ def get_specific_region_name(geocoder,  region_id):
     ds = ogr.Open(_data_path.encode('utf-8'))
     layer_name = 'region_'+geocoder.lower().replace('.', '_')
     layer = ds.GetLayerByName(layer_name.encode('utf-8'))
-    if layer == None:
+    if layer is None:
         layer = ds['region']
-    specific_name = layer.GetFeature(region_id).GetField("name")
-    if specific_name!=None: #maybe Null!
+    specific_name = layer.GetFeature(region_id).GetField('name')
+    if specific_name is not None:  # maybe Null!
         specific_name = unicode(specific_name, 'utf-8')
     else:
         specific_name = ''

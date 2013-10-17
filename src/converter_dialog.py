@@ -21,7 +21,7 @@
 try:
     from osgeo import ogr, osr,  gdal
 except ImportError:
-    import ogr, osr,  gdal
+    import ogr, osr, gdal
 
 import sys
 import locale
@@ -34,8 +34,10 @@ from qgis.core import QgsVectorLayer,  QgsMapLayerRegistry
 
 from ui_converter_dialog import Ui_ConverterDialog
 
+
 _fs_encoding = sys.getfilesystemencoding()
 _message_encoding = locale.getdefaultlocale()[1]
+
 
 class ConverterDialog(QDialog, Ui_ConverterDialog):
     def __init__(self):
@@ -44,10 +46,9 @@ class ConverterDialog(QDialog, Ui_ConverterDialog):
         self.setFixedSize(self.size())
 
         #SIGNALS
-        QObject.connect(self.btnSelectCsv, SIGNAL("clicked()"), self.select_csv)
-        QObject.connect(self.btnSelectShp, SIGNAL("clicked()"), self.select_shp)
-        QObject.connect(self.buttonBox, SIGNAL("accepted()"), self.processing)
-
+        QObject.connect(self.btnSelectCsv, SIGNAL('clicked()'), self.select_csv)
+        QObject.connect(self.btnSelectShp, SIGNAL('clicked()'), self.select_shp)
+        QObject.connect(self.buttonBox, SIGNAL('accepted()'), self.processing)
 
     def select_shp(self):
         shp_path = QString()
@@ -60,9 +61,10 @@ class ConverterDialog(QDialog, Ui_ConverterDialog):
         if not file_name.isEmpty():
             self.txtShpPath.setText(file_name)
 
-
     def select_csv(self):
-        file_name = QFileDialog.getOpenFileName(self, self.tr('Select input CSV file'), '', self.tr('CSV files (*.csv *.CSV)'))
+        file_name = QFileDialog.getOpenFileName(self,
+                                                self.tr('Select input CSV file'), '',
+                                                self.tr('CSV files (*.csv *.CSV)'))
         if not file_name.isEmpty():
             self.txtCsvPath.setText(file_name)
             #set output path
@@ -70,28 +72,27 @@ class ConverterDialog(QDialog, Ui_ConverterDialog):
                 shp_path = path.splitext(unicode(file_name))[0]+'.shp'
                 self.txtShpPath.setText(shp_path)
 
-
     def processing(self):
         #check user input
         in_path = unicode(self.txtCsvPath.text())
         out_path = unicode(self.txtShpPath.text())
 
         if not in_path:
-            self.__show_err(self.tr("Select input CSV file!"))
+            self.__show_err(self.tr('Select input CSV file!'))
             return
         if not out_path:
-            self.__show_err(self.tr("Select name for output SHP file!"))
+            self.__show_err(self.tr('Select name for output SHP file!'))
             return
         if not path.exists(in_path):
-            self.__show_err(self.tr("Selected CSV file not found!"))
+            self.__show_err(self.tr('Selected CSV file not found!'))
             return
 
         #prepare output data source
-        drv = ogr.GetDriverByName("ESRI Shapefile")
+        drv = ogr.GetDriverByName('ESRI Shapefile')
         #check output datasource exists
         if path.exists(out_path):
-            if QMessageBox.question(self,  self.tr("RuGeocoder"),  
-                                    self.tr("SHP file with the same name already exists.\n Do you want to overwrite it?"), 
+            if QMessageBox.question(self,  self.tr('RuGeocoder'),
+                                    self.tr('SHP file with the same name already exists.\n Do you want to overwrite it?'),
                                     QMessageBox.Yes | QMessageBox.Cancel) == QMessageBox.Yes:
                 drv.DeleteDataSource(out_path.encode('utf-8'))
             else:
@@ -100,8 +101,8 @@ class ConverterDialog(QDialog, Ui_ConverterDialog):
         #create output shp file
         gdal.ErrorReset()
         output_data_source = drv.CreateDataSource(out_path.encode('utf-8'))
-        if output_data_source==None:
-            self.__show_err(self.tr("Output SHP file can't be created!\n%1")
+        if output_data_source is None:
+            self.__show_err(self.tr('Output SHP file can\'t be created!\n%1')
                                      .arg(unicode(gdal.GetLastErrorMsg(), _message_encoding)))
             return
 
@@ -109,7 +110,7 @@ class ConverterDialog(QDialog, Ui_ConverterDialog):
         wgs_sr.ImportFromEPSG(4326)
 
         layer_name = path.splitext(path.basename(out_path))[0]
-        output_layer = output_data_source.CreateLayer( layer_name.encode('utf-8'), srs = wgs_sr, geom_type = ogr.wkbPoint )
+        output_layer = output_data_source.CreateLayer(layer_name.encode('utf-8'), srs=wgs_sr, geom_type=ogr.wkbPoint)
 
         #copy fields
         input_data_source = ogr.Open(in_path.encode('utf-8'))
@@ -118,10 +119,10 @@ class ConverterDialog(QDialog, Ui_ConverterDialog):
         csv_feat_defs = csv_layer.GetLayerDefn()
         for i in range(csv_feat_defs.GetFieldCount()):
             field_def = csv_feat_defs.GetFieldDefn(i)
-            if field_def.GetType()==ogr.OFTString:
+            if field_def.GetType() == ogr.OFTString:
                 field_def.SetWidth(300)
             if output_layer.CreateField(field_def) != 0:
-                self.__show_err( self.tr("Unable to create a field %1!").arg(field_def.GetNameRef()))
+                self.__show_err(self.tr('Unable to create a field %1!').arg(field_def.GetNameRef()))
                 return
 
         #add geocoder additional fields
@@ -135,7 +136,7 @@ class ConverterDialog(QDialog, Ui_ConverterDialog):
             #copy fields
             res = out_feat.SetFrom(in_feat)
             if res != 0:
-                self.__show_err(self.tr("Unable to construct the feature!"))
+                self.__show_err(self.tr('Unable to construct the feature!'))
                 return
             #set geom
             pt = ogr.Geometry(ogr.wkbPoint)
@@ -143,25 +144,24 @@ class ConverterDialog(QDialog, Ui_ConverterDialog):
             out_feat.SetGeometry(pt)
             #add to layer
             if output_layer.CreateFeature(out_feat) != 0:
-                self.__show_err(self.tr("Failed to create feature in SHP file!"))
+                self.__show_err(self.tr('Failed to create feature in SHP file!'))
                 return
             in_feat = csv_layer.GetNextFeature()
         
         #close DS's
         output_data_source.Destroy()
         input_data_source.Destroy()
-        
-        
-        QMessageBox.information(self, self.tr("RuGeocoder"), self.tr("Converting successfully completed"))
+
+        QMessageBox.information(self, self.tr('RuGeocoder'), self.tr('Converting successfully completed'))
         if self.chkAddToCanvas.isChecked():
             self.add_layer_to_canvas(out_path)
         self.close()
         
     def add_layer_to_canvas(self, shp_path):
         if not path.exists(shp_path):
-            return False#message???
+            return False  # message???
         layer_name = path.splitext(path.basename(shp_path))[0]
-        vector_layer = QgsVectorLayer(shp_path, layer_name, "ogr")
+        vector_layer = QgsVectorLayer(shp_path, layer_name, 'ogr')
         if vector_layer.isValid():
             QgsMapLayerRegistry.instance().addMapLayer(vector_layer)
             return True
@@ -170,30 +170,29 @@ class ConverterDialog(QDialog, Ui_ConverterDialog):
             
     def add_additional_fields(self,  output_layer):
         out_defs = output_layer.GetLayerDefn()
-        if out_defs.GetFieldIndex("settlement") < 0:
-            if not self.__add_field(output_layer, "settlement", ogr.OFTString,  250):
+        if out_defs.GetFieldIndex('settlement') < 0:
+            if not self.__add_field(output_layer, 'settlement', ogr.OFTString,  250):
                 return False
-        if out_defs.GetFieldIndex("street") < 0:
-            if not self.__add_field(output_layer, "street", ogr.OFTString,  250):
+        if out_defs.GetFieldIndex('street') < 0:
+            if not self.__add_field(output_layer, 'street', ogr.OFTString,  250):
                 return False
-        if out_defs.GetFieldIndex("building_num") < 0:
-            if not self.__add_field(output_layer, "building_num", ogr.OFTString,  250):
+        if out_defs.GetFieldIndex('building_num') < 0:
+            if not self.__add_field(output_layer, 'building_num', ogr.OFTString,  250):
                 return False
-        if out_defs.GetFieldIndex("geocoded") < 0:
-            if not self.__add_field(output_layer, "geocoded", ogr.OFTString,  250):
+        if out_defs.GetFieldIndex('geocoded') < 0:
+            if not self.__add_field(output_layer, 'geocoded', ogr.OFTString,  250):
                 return False
         return True
- 
 
     def __add_field(self,  layer, field_name,   field_type=ogr.OFTString,  field_len=None):
         field_def = ogr.FieldDefn(field_name, field_type)
         if field_len:
             field_def.SetWidth(field_len)
-        if layer.CreateField (field_def) != 0:
-            self.__show_err( self.tr("Unable to create a field %1!").arg(field_def.GetNameRef()))
+        if layer.CreateField(field_def) != 0:
+            self.__show_err(self.tr('Unable to create a field %1!').arg(field_def.GetNameRef()))
             return False
         else:
             return True
             
     def __show_err(self,  msg):
-         QMessageBox.critical(self, self.tr("RuGeocoder error"), msg)
+        QMessageBox.critical(self, self.tr('RuGeocoder error'), msg)
