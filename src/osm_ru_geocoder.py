@@ -24,29 +24,15 @@ import urllib
 from qgis.core import QgsPoint 
 #from PyQt4.QtGui import QMessageBox
 
+from base_geocoder import BaseGeocoder
 
-class OsmRuGeocoder():
+
+class OsmRuGeocoder(BaseGeocoder):
     url = 'http://www.openstreetmap.ru/api/search?q='
 
-    def _construct_search_str(self, region, rayon, city, street, house_number):
-        search_str = ''
-        if region:
-            search_str += region + ', '
-        if rayon:
-            search_str += rayon + ', '
-        if city:
-            search_str += city + ', '
-        if street:
-            search_str += street + ', '
-        if house_number:
-            search_str += house_number
-        search_str = search_str.rstrip().rstrip(',')
-        #QMessageBox.information(None, 'Geocoding debug', search_str)
-        return search_str
-
     def _search(self, region, rayon, city, street, house_number):
-        full_addr = self._construct_search_str(region, rayon, city, street, house_number)
-        full_addr = urllib.quote(full_addr.encode("utf-8"))
+        full_addr = self._construct_reverse_search_str(region, rayon, city, street, house_number)
+        full_addr = urllib.quote(full_addr.encode('utf-8'))
         if not full_addr:
             #empty address
             return None
@@ -95,4 +81,4 @@ class OsmRuGeocoder():
         
         #hm. wtf?
         pt = QgsPoint(0, 0)
-        return pt, "Not found"
+        return pt, 'Not found'

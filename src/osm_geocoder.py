@@ -24,25 +24,11 @@ import urllib
 from qgis.core import QgsPoint 
 #from PyQt4.QtGui import QMessageBox
 
+from base_geocoder import BaseGeocoder
 
-class OsmGeocoder():
+
+class OsmGeocoder(BaseGeocoder):
     url = 'http://nominatim.openstreetmap.org/search?countrycodes=ru&format=json&polygon=0&addressdetails=1&limit=10&accept-language=ru,en-US;&q='
-
-    def _construct_search_str(self, region, rayon, city, street, house_number):
-        search_str = ''
-        if house_number:
-            search_str += house_number + ', '
-        if street:
-            search_str += street + ', '
-        if city:
-            search_str += city + ', '
-        if rayon:
-            search_str += rayon + ', '
-        if region:
-            search_str += region
-        search_str = search_str.rstrip().rstrip(',')
-        #QMessageBox.information(None, "Geocoding debug", search_str)
-        return search_str
 
     def _normalize_num(self, num):
         if num is None:
