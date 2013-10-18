@@ -87,6 +87,13 @@ class ConverterDialog(QDialog, Ui_ConverterDialog):
             self.__show_err(self.tr('Selected CSV file not found!'))
             return
 
+        #try to open input csv
+        input_data_source = ogr.Open(in_path.encode('utf-8'))
+        if input_data_source is None:
+            self.__show_err(self.tr('Input CSV file is corrupted or can\'t be opened!\n%1')
+                                     .arg(unicode(gdal.GetLastErrorMsg(), _message_encoding)))
+            return
+
         #prepare output data source
         drv = ogr.GetDriverByName('ESRI Shapefile')
         #check output datasource exists
@@ -113,9 +120,7 @@ class ConverterDialog(QDialog, Ui_ConverterDialog):
         output_layer = output_data_source.CreateLayer(layer_name.encode('utf-8'), srs=wgs_sr, geom_type=ogr.wkbPoint)
 
         #copy fields
-        input_data_source = ogr.Open(in_path.encode('utf-8'))
         csv_layer = input_data_source[0]
-
         csv_feat_defs = csv_layer.GetLayerDefn()
         for i in range(csv_feat_defs.GetFieldCount()):
             field_def = csv_feat_defs.GetFieldDefn(i)
