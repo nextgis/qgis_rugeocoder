@@ -26,9 +26,9 @@ from datetime import datetime
 from geocoder_factory import GeocoderFactory
 
 from PyQt4.QtGui import QDialog, QMessageBox
-from PyQt4.QtCore import QObject, SIGNAL, QString
+from PyQt4.QtCore import QObject, SIGNAL
 
-from qgis.core import QGis, QgsRectangle, QgsFeature, QgsGeometry
+from qgis.core import QGis, QgsGeometry
 
 from ui_batch_geocoding_dialog import Ui_BatchGeocodingDialog
 from utils import get_vector_layer_by_name, get_layer_names, get_layer_str_fields,  get_layer_all_fields
@@ -157,37 +157,30 @@ class BatchGeocodingDialog(QDialog, Ui_BatchGeocodingDialog):
         region = None
         if self.chkRegion.isChecked():
             geocoder_name = unicode(self.cmbGeocoder.currentText())
-            region_id = self.cmbRegion.itemData(self.cmbRegion.currentIndex()).toPyObject()[QString('id')]
+            region_id = self.cmbRegion.itemData(self.cmbRegion.currentIndex())['id']
             region = regions_helper.get_specific_region_name(geocoder_name,  region_id)
 
-        #select all features
-        feat = QgsFeature()
-        attrs = data_provider.attributeIndexes()
-        data_provider.select(attrs, QgsRectangle(), False)
-
-        while data_provider.nextFeature(feat):
+        for feat in data_provider.getFeatures():
             #get values for geocoding
-            attr_map = feat.attributeMap()
-
-            addr = unicode(attr_map[addr_index].toString())
+            addr = unicode(feat[addr_index])
 
             district = None
             if self.chkDistrict.isChecked():
                 if self.rbDisctrictName.isChecked():
                     district = unicode(self.txtDistrictName.text())
                 else:
-                    district = unicode(attr_map[district_index].toString())
+                    district = unicode(feat[district_index])
 
             settl = None
             if self.chkSettlement.isChecked():
                 if self.rbSettlName.isChecked():
-                    settl = unicode(self.txtSettlName.text() )
+                    settl = unicode(self.txtSettlName.text())
                 else:
-                    settl = unicode(attr_map[settl_index].toString())
+                    settl = unicode(feat[settl_index])
 
             if self.chkStreet.isChecked():
-                street = unicode(attr_map[street_index].toString())
-                build_num = unicode(attr_map[build_index].toString())
+                street = unicode(feat[street_index])
+                build_num = unicode(feat[build_index])
             else:
                 street = addr  # ugly! maybe need one more method for geocoders???
                 build_num = None
@@ -197,7 +190,8 @@ class BatchGeocodingDialog(QDialog, Ui_BatchGeocodingDialog):
                 pt, desc = coder.geocode(region, district, settl, street, build_num)
             except URLError:
                 if QMessageBox.critical(self, self.tr('RuGeocoder'),
-                            (self.tr('Network error!\n%1\nIgnore the error and continue?')).arg(unicode(sys.exc_info()[1])),
+                            (self.tr('Network error!\n{0}\nIgnore the error and continue?'))
+                            .format(unicode(sys.exc_info()[1])),
                             QMessageBox.Ignore | QMessageBox.Cancel) == QMessageBox.Ignore:
                     self.prgProcess.setValue(self.prgProcess.value() + 1)
                     continue
@@ -206,8 +200,8 @@ class BatchGeocodingDialog(QDialog, Ui_BatchGeocodingDialog):
                     return
             except Exception:
                 if QMessageBox.critical(self, self.tr('RuGeocoder'),
-                            (self.tr('Error of processing!\n%1: %2\nIgnore the error and continue?'))
-                            .arg(unicode(sys.exc_info()[0].__name__)).arg(unicode(sys.exc_info()[1])),
+                            (self.tr('Error of processing!\n{0}: {1}\nIgnore the error and continue?'))
+                            .format(unicode(sys.exc_info()[0].__name__)), unicode(sys.exc_info()[1]),
                             QMessageBox.Ignore | QMessageBox.Cancel) == QMessageBox.Ignore:
                     self.prgProcess.setValue(self.prgProcess.value() + 1)
                     continue
@@ -234,6 +228,5 @@ class BatchGeocodingDialog(QDialog, Ui_BatchGeocodingDialog):
             total_sec = td.total_seconds()
 
         QMessageBox.information(self, self.tr('Geocoding successfully completed'),
-                         self.tr('Geoceded %1 features for %2 seconds')
-                         .arg(unicode(features_for_update))
-                         .arg(unicode(total_sec)))
+                         self.tr('Geoceded {0} features for {1} seconds')
+                         .format(unicode(features_for_update), unicode(total_sec)))

@@ -21,7 +21,7 @@
 from os import path
 import sys
 # Import the PyQt and QGIS libraries
-from PyQt4.QtCore import QObject, SIGNAL, QSettings, QVariant, QLocale, QFileInfo, QTranslator, QCoreApplication
+from PyQt4.QtCore import QObject, SIGNAL, QSettings, QLocale, QFileInfo, QTranslator, QCoreApplication
 from PyQt4.QtGui import QAction, QIcon
 #from qgis.core import *
 # Initialize Qt resources from file resources.py
@@ -43,11 +43,11 @@ class RuGeocoderPlugin:
         self.__geocoder_dlg = BatchGeocodingDialog()
 
         # i18n support
-        override_locale = QSettings().value('locale/overrideFlag', QVariant(False)).toBool()
+        override_locale = QSettings().value('locale/overrideFlag', False, type=bool)
         if not override_locale:
             locale_full_name = QLocale.system().name()
         else:
-            locale_full_name = QSettings().value('locale/userLocale', QVariant('')).toString()
+            locale_full_name = QSettings().value('locale/userLocale', '', type=unicode)
 
         self.locale_path = '%s/i18n/rugeocoder_%s.qm' % (_current_path, locale_full_name[0:2])
         if QFileInfo(self.locale_path).exists():

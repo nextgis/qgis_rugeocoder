@@ -28,7 +28,7 @@ import locale
 from os import path
 
 from PyQt4.QtGui import QDialog, QMessageBox, QFileDialog
-from PyQt4.QtCore import QObject, SIGNAL, QString
+from PyQt4.QtCore import QObject, SIGNAL
 
 from qgis.core import QgsVectorLayer,  QgsMapLayerRegistry
 
@@ -51,21 +51,21 @@ class ConverterDialog(QDialog, Ui_ConverterDialog):
         QObject.connect(self.buttonBox, SIGNAL('accepted()'), self.processing)
 
     def select_shp(self):
-        shp_path = QString()
+        shp_path = None
         if self.txtShpPath.text():
             shp_path = unicode(self.txtShpPath.text())
         file_name = QFileDialog.getSaveFileName(self,
                                                 self.tr('Select output SHP file'),
                                                 shp_path,
                                                 self.tr('SHP files (*.shp *.shp)'))
-        if not file_name.isEmpty():
+        if file_name:
             self.txtShpPath.setText(file_name)
 
     def select_csv(self):
         file_name = QFileDialog.getOpenFileName(self,
                                                 self.tr('Select input CSV file'), '',
                                                 self.tr('CSV files (*.csv *.CSV)'))
-        if not file_name.isEmpty():
+        if file_name:
             self.txtCsvPath.setText(file_name)
             #set output path
             if not self.txtShpPath.text():
@@ -90,8 +90,8 @@ class ConverterDialog(QDialog, Ui_ConverterDialog):
         #try to open input csv
         input_data_source = ogr.Open(in_path.encode('utf-8'))
         if input_data_source is None:
-            self.__show_err(self.tr('Input CSV file is corrupted or can\'t be opened!\n%1')
-                                     .arg(unicode(gdal.GetLastErrorMsg(), _message_encoding)))
+            self.__show_err(self.tr('Input CSV file is corrupted or can\'t be opened!\n{0}')
+                                     .format(unicode(gdal.GetLastErrorMsg(), _message_encoding)))
             return
 
         #prepare output data source
@@ -109,8 +109,8 @@ class ConverterDialog(QDialog, Ui_ConverterDialog):
         gdal.ErrorReset()
         output_data_source = drv.CreateDataSource(out_path.encode('utf-8'))
         if output_data_source is None:
-            self.__show_err(self.tr('Output SHP file can\'t be created!\n%1')
-                                     .arg(unicode(gdal.GetLastErrorMsg(), _message_encoding)))
+            self.__show_err(self.tr('Output SHP file can\'t be created!\n{0}')
+                                     .format(unicode(gdal.GetLastErrorMsg(), _message_encoding)))
             return
 
         wgs_sr = osr.SpatialReference()
@@ -127,7 +127,7 @@ class ConverterDialog(QDialog, Ui_ConverterDialog):
             if field_def.GetType() == ogr.OFTString:
                 field_def.SetWidth(300)
             if output_layer.CreateField(field_def) != 0:
-                self.__show_err(self.tr('Unable to create a field %1!').arg(field_def.GetNameRef()))
+                self.__show_err(self.tr('Unable to create a field {0}!').format(field_def.GetNameRef()))
                 return
 
         #add geocoder additional fields
@@ -194,7 +194,7 @@ class ConverterDialog(QDialog, Ui_ConverterDialog):
         if field_len:
             field_def.SetWidth(field_len)
         if layer.CreateField(field_def) != 0:
-            self.__show_err(self.tr('Unable to create a field %1!').arg(field_def.GetNameRef()))
+            self.__show_err(self.tr('Unable to create a field %1!').format(field_def.GetNameRef()))
             return False
         else:
             return True

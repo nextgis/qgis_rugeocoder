@@ -27,11 +27,7 @@ def get_layer_all_fields(layer):
     Return all fields for layer
     Use fTools code
     """
-    field_map = layer.dataProvider().fields()
-    field_list = []
-    for num, field in field_map.iteritems():
-            field_list.append(unicode(field.name()))
-    return field_list  # sorted( field_list, cmp=locale.strcoll )
+    return layer.dataProvider().fieldNameMap().keys()
 
 
 def get_layer_str_fields(layer):
@@ -39,9 +35,9 @@ def get_layer_str_fields(layer):
     Return only string fields for layer
     Use fTools code
     """
-    field_map = layer.dataProvider().fields()
+    fields = layer.dataProvider().fields()
     field_list = []
-    for num, field in field_map.iteritems():
+    for field in fields:
         if field.typeName() == 'String':
             field_list.append(unicode(field.name()))
     return field_list  # sorted( field_list, cmp=locale.strcoll )

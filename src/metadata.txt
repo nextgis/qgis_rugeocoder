@@ -2,9 +2,9 @@
 
 [general]
 name=RuGeocoder
-qgisMinimumVersion=1.6
+qgisMinimumVersion=2.0
 description=Geocode your csv files to shp (Russia only)
-version=0.3.9
+version=0.4.0
 
 
 # Optional items:
