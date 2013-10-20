@@ -13,48 +13,43 @@
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="batch_geocoding_dialog.py" line="211"/>
+        <location filename="batch_geocoding_dialog.py" line="202"/>
         <source>RuGeocoder</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="batch_geocoding_dialog.py" line="94"/>
+        <location filename="batch_geocoding_dialog.py" line="91"/>
         <source>You need to choose a point layer!</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="batch_geocoding_dialog.py" line="110"/>
+        <location filename="batch_geocoding_dialog.py" line="109"/>
         <source>You need to enter the city name!</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="batch_geocoding_dialog.py" line="114"/>
+        <location filename="batch_geocoding_dialog.py" line="113"/>
         <source>You need to select the field containing the names of cities!</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="batch_geocoding_dialog.py" line="106"/>
+        <location filename="batch_geocoding_dialog.py" line="104"/>
         <source>You need to select the field containing the names of districts!</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="batch_geocoding_dialog.py" line="98"/>
+        <location filename="batch_geocoding_dialog.py" line="95"/>
         <source>You need to select the field containing the addresses!</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="batch_geocoding_dialog.py" line="131"/>
+        <location filename="batch_geocoding_dialog.py" line="133"/>
         <source>Layer is not in edit mode! Please start editing the layer!</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="batch_geocoding_dialog.py" line="239"/>
+        <location filename="batch_geocoding_dialog.py" line="230"/>
         <source>Geocoding successfully completed</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location filename="batch_geocoding_dialog.py" line="239"/>
-        <source>Geoceded %1 features for %2 seconds</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
@@ -103,7 +98,7 @@
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="batch_geocoding_dialog.py" line="102"/>
+        <location filename="batch_geocoding_dialog.py" line="100"/>
         <source>You need to enter the district name!</source>
         <translation type="unfinished"></translation>
     </message>
@@ -113,7 +108,7 @@
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="batch_geocoding_dialog.py" line="122"/>
+        <location filename="batch_geocoding_dialog.py" line="123"/>
         <source>You need to select the field containing the numbers of buildings!</source>
         <translation type="unfinished"></translation>
     </message>
@@ -123,59 +118,64 @@
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="batch_geocoding_dialog.py" line="127"/>
+        <location filename="batch_geocoding_dialog.py" line="129"/>
         <source>Selected layer was not found! Maybe it was removed from the project. Please select another layer.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="batch_geocoding_dialog.py" line="202"/>
+        <location filename="batch_geocoding_dialog.py" line="192"/>
         <source>Network error!
-%1
+{0}
 Ignore the error and continue?</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="batch_geocoding_dialog.py" line="211"/>
+        <location filename="batch_geocoding_dialog.py" line="202"/>
         <source>Error of processing!
-%1: %2
+{0}: {1}
 Ignore the error and continue?</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="batch_geocoding_dialog.py" line="230"/>
+        <source>Geoceded {0} features for {1} seconds</source>
         <translation type="unfinished"></translation>
     </message>
 </context>
 <context>
     <name>ConverterDialog</name>
     <message>
-        <location filename="converter_dialog.py" line="53"/>
+        <location filename="converter_dialog.py" line="57"/>
         <source>Select output SHP file</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="converter_dialog.py" line="53"/>
+        <location filename="converter_dialog.py" line="57"/>
         <source>SHP files (*.shp *.shp)</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="converter_dialog.py" line="62"/>
+        <location filename="converter_dialog.py" line="65"/>
         <source>Select input CSV file</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="converter_dialog.py" line="62"/>
+        <location filename="converter_dialog.py" line="65"/>
         <source>CSV files (*.csv *.CSV)</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="converter_dialog.py" line="196"/>
+        <location filename="converter_dialog.py" line="203"/>
         <source>RuGeocoder error</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="converter_dialog.py" line="152"/>
+        <location filename="converter_dialog.py" line="160"/>
         <source>RuGeocoder</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="converter_dialog.py" line="152"/>
+        <location filename="converter_dialog.py" line="160"/>
         <source>Converting successfully completed</source>
         <translation type="unfinished"></translation>
     </message>
@@ -200,32 +200,32 @@ Ignore the error and continue?</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="converter_dialog.py" line="77"/>
+        <location filename="converter_dialog.py" line="81"/>
         <source>Select input CSV file!</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="converter_dialog.py" line="80"/>
+        <location filename="converter_dialog.py" line="84"/>
         <source>Select name for output SHP file!</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="converter_dialog.py" line="83"/>
+        <location filename="converter_dialog.py" line="87"/>
         <source>Selected CSV file not found!</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="converter_dialog.py" line="190"/>
+        <location filename="converter_dialog.py" line="197"/>
         <source>Unable to create a field %1!</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="converter_dialog.py" line="135"/>
+        <location filename="converter_dialog.py" line="144"/>
         <source>Unable to construct the feature!</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="converter_dialog.py" line="143"/>
+        <location filename="converter_dialog.py" line="152"/>
         <source>Failed to create feature in SHP file!</source>
         <translation type="unfinished"></translation>
     </message>
@@ -235,15 +235,9 @@ Ignore the error and continue?</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="converter_dialog.py" line="90"/>
+        <location filename="converter_dialog.py" line="101"/>
         <source>SHP file with the same name already exists.
  Do you want to overwrite it?</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location filename="converter_dialog.py" line="101"/>
-        <source>Output SHP file can&apos;t be created!
-%1</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
@@ -251,16 +245,33 @@ Ignore the error and continue?</source>
         <source>Add additional fields</source>
         <translation type="unfinished"></translation>
     </message>
+    <message>
+        <location filename="converter_dialog.py" line="93"/>
+        <source>Input CSV file is corrupted or can&apos;t be opened!
+{0}</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="converter_dialog.py" line="112"/>
+        <source>Output SHP file can&apos;t be created!
+{0}</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="converter_dialog.py" line="130"/>
+        <source>Unable to create a field {0}!</source>
+        <translation type="unfinished"></translation>
+    </message>
 </context>
 <context>
     <name>RuGeocoder</name>
     <message>
-        <location filename="ru_geocoder_plugin.py" line="59"/>
+        <location filename="ru_geocoder_plugin.py" line="60"/>
         <source>Convert CSV to SHP</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="ru_geocoder_plugin.py" line="63"/>
+        <location filename="ru_geocoder_plugin.py" line="65"/>
         <source>Batch geocoding</source>
         <translation type="unfinished"></translation>
     </message>
