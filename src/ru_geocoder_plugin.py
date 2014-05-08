@@ -23,12 +23,14 @@ import sys
 # Import the PyQt and QGIS libraries
 from PyQt4.QtCore import QObject, SIGNAL, QSettings, QLocale, QFileInfo, QTranslator, QCoreApplication
 from PyQt4.QtGui import QAction, QIcon
-#from qgis.core import *
+from qgis.core import QgsApplication
 # Initialize Qt resources from file resources.py
 import resources
 # Import the code for the dialog
 from batch_geocoding_dialog import BatchGeocodingDialog
 from converter_dialog import ConverterDialog
+from quick_geocoding_toolbox import  QuickGeocodingToolbox
+
 
 
 _fs_encoding = sys.getfilesystemencoding()
@@ -41,6 +43,8 @@ class RuGeocoderPlugin:
         self.iface = iface
         self.__converter_dlg = ConverterDialog()
         self.__geocoder_dlg = BatchGeocodingDialog()
+        self.__quick_tlb = QuickGeocodingToolbox(self.iface)
+
 
         # i18n support
         override_locale = QSettings().value('locale/overrideFlag', False, type=bool)
@@ -67,12 +71,22 @@ class RuGeocoderPlugin:
                                               self.iface.mainWindow())
         QObject.connect(self.action_batch_geocoding, SIGNAL('triggered()'), self.run_batch)
 
+        self.action_quick_geocoding = self.__quick_tlb.toggleViewAction()
+        #icon = QgsApplication.getThemeIcon('/processing/images/toolbox.png') or QgsApplication.getThemeIcon('/mActionFileOpen.svg')
+        #self.action_quick_geocoding.setIcon(icon)
+        self.action_quick_geocoding.setText(QCoreApplication.translate('RuGeocoder', '&Quick geocoding toolbox'))
+
+
         # Add toolbar button and menu item
         self.iface.addToolBarIcon(self.action_convert)
         self.iface.addPluginToMenu('&RuGeocoder', self.action_convert)
 
         self.iface.addToolBarIcon(self.action_batch_geocoding)
         self.iface.addPluginToMenu('&RuGeocoder', self.action_batch_geocoding)
+
+        self.iface.addToolBarIcon(self.action_quick_geocoding)
+        self.iface.addPluginToMenu('&RuGeocoder', self.action_quick_geocoding)
+
 
     def unload(self):
         # Remove the plugin menu item and icon
@@ -81,6 +95,10 @@ class RuGeocoderPlugin:
 
         self.iface.removePluginMenu('&RuGeocoder', self.action_batch_geocoding)
         self.iface.removeToolBarIcon(self.action_batch_geocoding)
+
+        self.iface.removePluginMenu('&RuGeocoder', self.action_quick_geocoding)
+        self.iface.removeToolBarIcon(self.action_quick_geocoding)
+
 
     def run_convert(self):
         if not self.__converter_dlg.isVisible():
