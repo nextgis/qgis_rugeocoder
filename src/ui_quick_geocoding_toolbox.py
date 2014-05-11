@@ -2,7 +2,7 @@
 
 # Form implementation generated from reading ui file './quick_geocoding_toolbox.ui'
 #
-# Created: Sat Jul 20 17:52:48 2013
+# Created: Mon May 12 00:12:51 2014
 #      by: PyQt4 UI code generator 4.10.1
 #
 # WARNING! All changes made in this file will be lost!
@@ -35,7 +35,7 @@ class Ui_QuickGeocodingToolbox(object):
         self.cmbGeocoder = QtGui.QComboBox(self.dockWidgetContents)
         self.cmbGeocoder.setObjectName(_fromUtf8("cmbGeocoder"))
         self.verticalLayout.addWidget(self.cmbGeocoder)
-        self.txtSearch = QtGui.QLineEdit(self.dockWidgetContents)
+        self.txtSearch = QgsFilterLineEdit(self.dockWidgetContents)
         self.txtSearch.setObjectName(_fromUtf8("txtSearch"))
         self.verticalLayout.addWidget(self.txtSearch)
         self.lstSearchResult = QtGui.QListWidget(self.dockWidgetContents)
@@ -50,3 +50,4 @@ class Ui_QuickGeocodingToolbox(object):
         QuickGeocodingToolbox.setWindowTitle(_translate("QuickGeocodingToolbox", "Quick geocoding", None))
         self.txtSearch.setToolTip(_translate("QuickGeocodingToolbox", "Enter address for geocoding", None))
 
+from qgis.gui import QgsFilterLineEdit

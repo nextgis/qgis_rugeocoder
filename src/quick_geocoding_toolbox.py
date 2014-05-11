@@ -21,10 +21,12 @@
 from urllib2 import URLError
 #import sys
 
-from PyQt4.QtGui import QDockWidget  # , QMessageBox
-from PyQt4.QtCore import QThread, pyqtSignal
+from PyQt4.QtGui import QDockWidget, QListWidgetItem  # , QMessageBox
+from PyQt4.QtCore import QThread, pyqtSignal, Qt
+from qgis.core import QgsPoint
 
 from geocoder_factory import GeocoderFactory
+from rb_result_renderer import RubberBandResultRenderer
 
 from ui_quick_geocoding_toolbox import Ui_QuickGeocodingToolbox
 
@@ -36,6 +38,7 @@ class QuickGeocodingToolbox(QDockWidget, Ui_QuickGeocodingToolbox):
         
         self.iface = iface
         self.search_threads = None  # []
+        self.result_renderer = RubberBandResultRenderer(iface)
 
         if hasattr(self.txtSearch, 'setPlaceholderText'):
             self.txtSearch.setPlaceholderText(self.tr("Address..."))
@@ -43,6 +46,14 @@ class QuickGeocodingToolbox(QDockWidget, Ui_QuickGeocodingToolbox):
         self.txtSearch.textChanged.connect(self.start_geocode)
         self.cmbGeocoder.currentIndexChanged.connect(self.start_geocode)
         self.cmbGeocoder.addItems(GeocoderFactory.get_geocoders_names())
+
+        self.lstSearchResult.currentItemChanged.connect(self.result_selected)
+        self.lstSearchResult.itemDoubleClicked.connect(self.result_selected)
+
+        self.visibilityChanged.connect(self.result_renderer.clear)
+
+    def __del__(self):
+        self.result_renderer.clear()
 
     def start_geocode(self):
         search_text = unicode(self.txtSearch.text())
@@ -52,10 +63,10 @@ class QuickGeocodingToolbox(QDockWidget, Ui_QuickGeocodingToolbox):
         
         geocoder_name = self.cmbGeocoder.currentText()
         
-        if 0 == 1 and self.search_thread:
-            print 'Kill ', self.search_thread
-            self.search_thread.terminate()
-            self.search_thread.wait()
+        if 1 == 1 and self.search_threads:
+            print 'Kill ', self.search_threads
+            self.search_threads.terminate()
+            self.search_threads.wait()
             
         self.show_progress()
         searcher = SearchThread(search_text, geocoder_name, self.iface.mainWindow())
@@ -72,8 +83,11 @@ class QuickGeocodingToolbox(QDockWidget, Ui_QuickGeocodingToolbox):
         print 'show'
         self.lstSearchResult.clear()
         for [pt, desc] in results:
-            print 'Result: ', desc
-            self.lstSearchResult.addItem(desc)
+            print 'Result: ', desc #  DEBUG
+            new_item = QListWidgetItem()
+            new_item.setText(unicode(desc))
+            new_item.setData(Qt.UserRole, pt)
+            self.lstSearchResult.addItem(new_item)
         self.lstSearchResult.update()
             
     def show_error(self, error_text):
@@ -82,7 +96,14 @@ class QuickGeocodingToolbox(QDockWidget, Ui_QuickGeocodingToolbox):
         self.lstSearchResult.clear()
         self.lstSearchResult.addItem(error_text)
 
-    
+    def result_selected(self, current=None, previous=None):
+        self.result_renderer.clear()
+        if current:
+            point = current.data(Qt.UserRole)
+            if isinstance(point, QgsPoint) and (point.x() != 0 and point.y() != 0):
+                self.result_renderer.show_point(point, True)
+
+
 class SearchThread(QThread):
     
     data_downloaded = pyqtSignal(object)
@@ -92,7 +113,7 @@ class SearchThread(QThread):
         QThread.__init__(self, parent)
         self.search_text = search_text
         self.geocoder_name = geocoder_name
-        print 'Search: ', search_text
+        print 'Search: ', search_text  # debug
         #define geocoder
         self.coder = GeocoderFactory.get_geocoder(geocoder_name)
 
@@ -111,14 +132,14 @@ class SearchThread(QThread):
             pt, desc = self.coder.geocode(None, None, None, None, self.search_text)
             results.append([pt, desc])
         except URLError:
-                        #import sys
-                        #error_text = (self.tr("Network error!\n%1")).arg(unicode(sys.exc_info()[1]))
-                        error_text = 'net'
+                        import sys
+                        error_text = (self.tr("Network error!\n{0}")).format(unicode(sys.exc_info()[1]))
+                        #error_text = 'net'
                         self.error_occurred.emit(error_text)
         except Exception:
-                        #import sys
-                        #error_text = (self.tr("Error of processing!\n%1: %2")).arg(unicode(sys.exc_info()[0].__name__)).arg(unicode(sys.exc_info()[1]))
-                        error_text = 'common'
+                        import sys
+                        error_text = (self.tr("Error of processing!\n{0}: {1}")).format(unicode(sys.exc_info()[0].__name__), unicode(sys.exc_info()[1]))
+                        #error_text = 'common'
                         self.error_occurred.emit(error_text)
         
         self.data_downloaded.emit(results)
