@@ -41,7 +41,16 @@ class OsmGeocoder(BaseGeocoder):
                 break
         return result
 
-    def geocode(self, region, rayon, city, street, house_number):
+    def geocode_components_multiple_results(self, region, rayon, city, street, house_number):
+        raise NotImplementedError
+
+    def geocode(self, search_str):
+        raise NotImplementedError
+
+    def geocode_multiple_results(self, search_str):
+        raise NotImplementedError
+
+    def geocode_components(self, region, rayon, city, street, house_number):
         house_number_norm = self._normalize_num(house_number)
         #try search as is...
         full_addr = self._construct_search_str(region, rayon, city, street, house_number_norm)

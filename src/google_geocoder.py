@@ -31,21 +31,36 @@ from base_geocoder import BaseGeocoder
 class GoogleGeocoder(BaseGeocoder):
     url = 'http://maps.googleapis.com/maps/api/geocode/json?&language=ru&sensor=false&address='
 
-    def geocode(self, region, rayon, city, street, house_number):
-        time.sleep(0.2)  # antiban
+    def geocode_components(self, region, rayon, city, street, house_number):
         full_addr = self._construct_search_str(region, rayon, city, street, house_number)
-        full_addr = urllib.quote(full_addr.encode('utf-8'))
+        return self.geocode(full_addr)
+
+    def geocode_components_multiple_results(self, region, rayon, city, street, house_number):
+        full_addr = self._construct_search_str(region, rayon, city, street, house_number)
+        return self.geocode_multiple_results(full_addr)
+
+    def geocode(self, search_str):
+        res = self.geocode_multiple_results(search_str)
+        if len(res) > 0:
+            return res[0]
+        else:
+            return (QgsPoint(0, 0), 'Not found')
+
+    def geocode_multiple_results(self, search_str):
+        time.sleep(0.5)  # antiban
+        full_addr = urllib.quote(search_str.encode('utf-8'))
         full_url = unicode(self.url) + unicode(full_addr, 'utf-8')
-        #QMessageBox.information(None, 'Geocoding debug', full_url)
+        print full_url
 
         f = urllib2.urlopen(full_url.encode('utf-8'))
         resp_str = unicode(f.read(),  'utf-8')
         resp_json = json.loads(resp_str)
 
+        results = []
         if resp_json['results']:
-            res0 = resp_json['results'][0]
-            pt = QgsPoint(float(res0['geometry']['location']['lng']), float(res0['geometry']['location']['lat']))
-            return pt, res0['formatted_address']
-        else:
-            pt = QgsPoint(0, 0)
-            return pt, 'Not found'
+            for res in resp_json['results']:
+                pt = QgsPoint(float(res['geometry']['location']['lng']), float(res['geometry']['location']['lat']))
+                desc = res['formatted_address']
+                results.append((pt, desc))
+
+        return results

@@ -82,8 +82,8 @@ class QuickGeocodingToolbox(QDockWidget, Ui_QuickGeocodingToolbox):
     def show_result(self, results):
         print 'show'
         self.lstSearchResult.clear()
-        for [pt, desc] in results:
-            print 'Result: ', desc #  DEBUG
+        for (pt, desc) in results:
+            #print 'Result: ', desc #  DEBUG
             new_item = QListWidgetItem()
             new_item.setText(unicode(desc))
             new_item.setData(Qt.UserRole, pt)
@@ -92,7 +92,6 @@ class QuickGeocodingToolbox(QDockWidget, Ui_QuickGeocodingToolbox):
             
     def show_error(self, error_text):
         print error_text
-        #QMessageBox.critical(self, self.tr("RuGeocoder"), error_text)
         self.lstSearchResult.clear()
         self.lstSearchResult.addItem(error_text)
 
@@ -105,6 +104,7 @@ class QuickGeocodingToolbox(QDockWidget, Ui_QuickGeocodingToolbox):
 
 
 class SearchThread(QThread):
+
     
     data_downloaded = pyqtSignal(object)
     error_occurred = pyqtSignal(object)    
@@ -113,7 +113,6 @@ class SearchThread(QThread):
         QThread.__init__(self, parent)
         self.search_text = search_text
         self.geocoder_name = geocoder_name
-        print 'Search: ', search_text  # debug
         #define geocoder
         self.coder = GeocoderFactory.get_geocoder(geocoder_name)
 
@@ -129,8 +128,7 @@ class SearchThread(QThread):
         
         #geocode
         try:
-            pt, desc = self.coder.geocode(None, None, None, None, self.search_text)
-            results.append([pt, desc])
+            results = self.coder.geocode_multiple_results(self.search_text)
         except URLError:
                         import sys
                         error_text = (self.tr("Network error!\n{0}")).format(unicode(sys.exc_info()[1]))

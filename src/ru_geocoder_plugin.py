@@ -87,6 +87,9 @@ class RuGeocoderPlugin:
         self.iface.addToolBarIcon(self.action_quick_geocoding)
         self.iface.addPluginToMenu('&RuGeocoder', self.action_quick_geocoding)
 
+        #import pydevd
+        #pydevd.settrace('localhost', port=9921, stdoutToServer=True, stderrToServer=True, suspend=False)
+
 
     def unload(self):
         # Remove the plugin menu item and icon

@@ -24,11 +24,20 @@
 class BaseGeocoder():
     url = None
 
-    def geocode(self, region, rayon, city, street, house_number):
-        raise NotImplementedError
-
     def __init__(self):
         pass
+
+    def geocode_components(self, region, rayon, city, street, house_number):
+        raise NotImplementedError
+
+    def geocode_components_multiple_results(self, region, rayon, city, street, house_number):
+        raise NotImplementedError
+
+    def geocode(self, search_str):
+        raise NotImplementedError
+
+    def geocode_multiple_results(self, search_str):
+        raise NotImplementedError
 
     def _construct_search_str(self, region, rayon, city, street, house_number):
         search_str = ''
@@ -43,7 +52,6 @@ class BaseGeocoder():
         if region:
             search_str += region
         search_str = search_str.rstrip().rstrip(',')
-        #QMessageBox.information(None, 'Geocoding debug', search_str)
         return search_str
 
     def _construct_reverse_search_str(self, region, rayon, city, street, house_number):
@@ -59,5 +67,4 @@ class BaseGeocoder():
         if house_number:
             search_str += house_number
         search_str = search_str.rstrip().rstrip(',')
-        #QMessageBox.information(None, 'Geocoding debug', search_str)
         return search_str

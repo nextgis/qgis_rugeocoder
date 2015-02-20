@@ -22,7 +22,6 @@ import json
 import urllib2
 import urllib
 from qgis.core import QgsPoint
-#from PyQt4.QtGui import QMessageBox
 
 from base_geocoder import BaseGeocoder
 
@@ -30,21 +29,36 @@ from base_geocoder import BaseGeocoder
 class YandexGeocoder(BaseGeocoder):
     url = 'http://geocode-maps.yandex.ru/1.x/?key=APbJTE8BAAAAwUV4ZgIAWchAMdqatI8n3SLIv26SUw2telQAAAAAAAAAAABJnzuIcf3RGjjl50cTEPtvjEbW8w==&format=json&geocode='
 
-    def geocode(self, region, rayon, city, street, house_number):
+    def geocode_components(self, region, rayon, city, street, house_number):
         full_addr = self._construct_reverse_search_str(region, rayon, city, street, house_number)
-        full_addr = urllib.quote(full_addr.encode('utf-8'))
+        return self.geocode(full_addr)
+
+    def geocode_components_multiple_results(self, region, rayon, city, street, house_number):
+        full_addr = self._construct_reverse_search_str(region, rayon, city, street, house_number)
+        return self.geocode_multiple_results(full_addr)
+
+    def geocode(self, search_str):
+        res = self.geocode_multiple_results(search_str)
+        if len(res) > 0:
+            return res[0]
+        else:
+            return (QgsPoint(0, 0), 'Not found')
+
+    def geocode_multiple_results(self, search_str):
+        full_addr = urllib.quote(search_str.encode('utf-8'))
         full_url = unicode(self.url) + unicode(full_addr, 'utf-8')
-        #QMessageBox.information(None, 'Geocoding debug', full_url)
-                
+        print full_url
+
         f = urllib2.urlopen(full_url.encode('utf-8'))
         resp_str = unicode(f.read(),  'utf-8')
         resp_json = json.loads(resp_str)
-                
+
+        result = []
         if resp_json['response']['GeoObjectCollection']['featureMember']:
-            res0 = resp_json['response']['GeoObjectCollection']['featureMember'][0]
-            pt_str = res0['GeoObject']['Point']['pos']
-            pt = QgsPoint(float(pt_str.split(' ')[0]), float(pt_str.split(' ')[1]))
-            return pt, res0['GeoObject']['metaDataProperty']['GeocoderMetaData']['text']
-        else:
-            pt = QgsPoint(0, 0)
-            return pt, 'Not found'
+            for feat_mem in resp_json['response']['GeoObjectCollection']['featureMember']:
+                pt_str = feat_mem['GeoObject']['Point']['pos']
+                pt = QgsPoint(float(pt_str.split(' ')[0]), float(pt_str.split(' ')[1]))
+                result.append((pt, feat_mem['GeoObject']['metaDataProperty']['GeocoderMetaData']['text']))
+
+        return result
+

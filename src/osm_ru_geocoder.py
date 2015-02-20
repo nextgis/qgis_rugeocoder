@@ -82,3 +82,15 @@ class OsmRuGeocoder(BaseGeocoder):
         #hm. wtf?
         pt = QgsPoint(0, 0)
         return pt, 'Not found'
+
+    def geocode_components(self, region, rayon, city, street, house_number):
+        raise NotImplementedError
+
+    def geocode_components_multiple_results(self, region, rayon, city, street, house_number):
+        raise NotImplementedError
+
+    def geocode(self, search_str):
+        raise NotImplementedError
+
+    def geocode_multiple_results(self, search_str):
+        raise NotImplementedError

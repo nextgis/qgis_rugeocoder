@@ -187,7 +187,7 @@ class BatchGeocodingDialog(QDialog, Ui_BatchGeocodingDialog):
 
             #geocode
             try:
-                pt, desc = coder.geocode(region, district, settl, street, build_num)
+                pt, desc = coder.geocode_components(region, district, settl, street, build_num)
             except URLError:
                 if QMessageBox.critical(self, self.tr('RuGeocoder'),
                             (self.tr('Network error!\n{0}\nIgnore the error and continue?'))
