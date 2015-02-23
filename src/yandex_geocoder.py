@@ -46,8 +46,9 @@ class YandexGeocoder(BaseGeocoder):
 
     def geocode_multiple_results(self, search_str):
         full_addr = urllib.quote(search_str.encode('utf-8'))
+        if not full_addr:
+            return []
         full_url = unicode(self.url) + unicode(full_addr, 'utf-8')
-        print full_url
 
         f = urllib2.urlopen(full_url.encode('utf-8'))
         resp_str = unicode(f.read(),  'utf-8')

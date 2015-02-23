@@ -44,12 +44,6 @@ class OsmGeocoder(BaseGeocoder):
     def geocode_components_multiple_results(self, region, rayon, city, street, house_number):
         raise NotImplementedError
 
-    def geocode(self, search_str):
-        raise NotImplementedError
-
-    def geocode_multiple_results(self, search_str):
-        raise NotImplementedError
-
     def geocode_components(self, region, rayon, city, street, house_number):
         house_number_norm = self._normalize_num(house_number)
         #try search as is...
@@ -87,3 +81,28 @@ class OsmGeocoder(BaseGeocoder):
             else:
                 pt = QgsPoint(0, 0)
                 return pt, 'Not found'
+
+    def geocode(self, search_str):
+        res = self.geocode_multiple_results(search_str)
+        if len(res) > 0:
+            return res[0]
+        else:
+            return (QgsPoint(0, 0), 'Not found')
+
+    def geocode_multiple_results(self, search_str):
+        full_addr = urllib.quote(search_str.encode('utf-8'))
+        if not full_addr:
+            return []
+        full_url = unicode(self.url) + unicode(full_addr, 'utf-8')
+
+        f = urllib2.urlopen(full_url.encode('utf-8'))
+        resp_str = unicode(f.read(),  'utf-8')
+        resp_json = json.loads(resp_str)
+
+        results = []
+        if len(resp_json) > 1:
+            for resp in resp_json:
+                pt = QgsPoint(float(resp['lon']), float(resp['lat']))
+                desc = resp['display_name']
+                results.append((pt, desc))
+        return results

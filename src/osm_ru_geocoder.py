@@ -53,7 +53,8 @@ class OsmRuGeocoder(BaseGeocoder):
             pt = QgsPoint(float(res0['lon']), float(res0['lat']))
             return pt, res0['display_name']
 
-    def geocode(self, region, rayon, city, street, house_number):
+    # TODO: need REFACTORING! strategy(opt/pis) and retrun None/[] not QgsPoint()
+    def geocode_components(self, region, rayon, city, street, house_number):
         #try to search as is
         res = self._search(region, rayon, city, street, house_number)
         if res is not None:
@@ -83,14 +84,31 @@ class OsmRuGeocoder(BaseGeocoder):
         pt = QgsPoint(0, 0)
         return pt, 'Not found'
 
-    def geocode_components(self, region, rayon, city, street, house_number):
-        raise NotImplementedError
-
     def geocode_components_multiple_results(self, region, rayon, city, street, house_number):
         raise NotImplementedError
 
     def geocode(self, search_str):
-        raise NotImplementedError
+        res = self.geocode_multiple_results(search_str)
+        if len(res) > 0:
+            return res[0]
+        else:
+            return (QgsPoint(0, 0), 'Not found')
 
     def geocode_multiple_results(self, search_str):
-        raise NotImplementedError
+        full_addr = urllib.quote(search_str.encode('utf-8'))
+        if not full_addr:
+            return []
+        full_url = unicode(self.url) + unicode(full_addr, 'utf-8')
+
+        f = urllib2.urlopen(full_url.encode('utf-8'))
+        resp_str = unicode(f.read(),  'utf-8')
+        resp_json = json.loads(resp_str)
+
+        results = []
+        if resp_json['find']:
+            for res in resp_json['matches']:
+                pt = QgsPoint(float(res['lon']), float(res['lat']))
+                desc = res['display_name']
+                results.append((pt, desc))
+
+        return results
