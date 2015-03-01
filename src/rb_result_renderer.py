@@ -30,6 +30,7 @@ class RubberBandResultRenderer():
         self.iface = iface
         self.rb = QgsRubberBand(self.iface.mapCanvas(), QGis.Point)
         self.rb.setColor(QColor('magenta'))
+        self.rb.setIconSize(12)
 
         self.srs_wgs84 = QgsCoordinateReferenceSystem(4326)
         self.transformation = QgsCoordinateTransform(self.srs_wgs84, self.srs_wgs84)
