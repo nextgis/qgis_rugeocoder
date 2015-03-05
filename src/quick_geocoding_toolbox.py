@@ -102,10 +102,18 @@ class QuickGeocodingToolbox(QDockWidget, Ui_QuickGeocodingToolbox):
             if isinstance(point, QgsPoint) and (point.x() != 0 and point.y() != 0):
                 self.result_renderer.show_point(point, True)
 
+    # for Settings
+    def get_active_geocoder_name(self):
+        return self.cmbGeocoder.currentText()
+
+    def set_active_geocoder(self, geocoder_name):
+        item_index = self.cmbGeocoder.findText(geocoder_name)
+        if item_index >= 0:
+            self.cmbGeocoder.setCurrentIndex(item_index)
+
 
 class SearchThread(QThread):
 
-    
     data_downloaded = pyqtSignal(object)
     error_occurred = pyqtSignal(object)    
     

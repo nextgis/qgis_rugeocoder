@@ -30,7 +30,7 @@ import resources
 from batch_geocoding_dialog import BatchGeocodingDialog
 from converter_dialog import ConverterDialog
 from quick_geocoding_toolbox import  QuickGeocodingToolbox
-
+from plugin_settings import PluginSettings
 
 
 _fs_encoding = sys.getfilesystemencoding()
@@ -38,13 +38,16 @@ _current_path = unicode(path.abspath(path.dirname(__file__)), _fs_encoding)
 
 
 class RuGeocoderPlugin:
+
+    # noinspection PyMethodMayBeStatic
+    def tr(self, message):
+        # noinspection PyTypeChecker,PyArgumentList,PyCallByClass
+        return QCoreApplication.translate('RuGeocoder', message)
+
+
     def __init__(self, iface):
         # Save reference to the QGIS interface
         self.iface = iface
-        self.__converter_dlg = ConverterDialog()
-        self.__geocoder_dlg = BatchGeocodingDialog()
-        self.__quick_tlb = QuickGeocodingToolbox(self.iface)
-
 
         # i18n support
         override_locale = QSettings().value('locale/overrideFlag', False, type=bool)
@@ -59,8 +62,27 @@ class RuGeocoderPlugin:
             self.translator.load(self.locale_path)
             QCoreApplication.installTranslator(self.translator)
 
+        # menu && toolbars
+        self.menu_name = self.tr(u'&RuGeocoder')
+        self.toolbar = self.iface.addToolBar(self.menu_name)
+        self.toolbar.setObjectName(u'RuGeocoderToolbar')
+
+        # instances
+        self.__converter_dlg = ConverterDialog()
+        self.__geocoder_dlg = BatchGeocodingDialog()
+
+        # Dock tree panel
+        self.__quick_tlb = QuickGeocodingToolbox(self.iface)
+        self.iface.addDockWidget(PluginSettings.dock_area(), self.__quick_tlb)
+        self.__quick_tlb.setFloating(PluginSettings.dock_floating())
+        self.__quick_tlb.resize(PluginSettings.dock_size())
+        self.__quick_tlb.move(PluginSettings.dock_pos())
+        self.__quick_tlb.setVisible(PluginSettings.dock_visibility())
+        self.__quick_tlb.set_active_geocoder(PluginSettings.dock_geocoder_name())
+
+
     def initGui(self):
-        # Setup signals
+        # Actions
         self.action_convert = QAction(QIcon(':/plugins/rugeocoderplugin/convert.png'),
                                       QCoreApplication.translate('RuGeocoder', 'Convert CSV to SHP'),
                                       self.iface.mainWindow())
@@ -72,20 +94,19 @@ class RuGeocoderPlugin:
         QObject.connect(self.action_batch_geocoding, SIGNAL('triggered()'), self.run_batch)
 
         self.action_quick_geocoding = self.__quick_tlb.toggleViewAction()
-        #icon = QgsApplication.getThemeIcon('/processing/images/toolbox.png') or QgsApplication.getThemeIcon('/mActionFileOpen.svg')
-        #self.action_quick_geocoding.setIcon(icon)
+        icon = QgsApplication.getThemeIcon('/processing/images/toolbox.png') or QgsApplication.getThemeIcon('/mActionFileOpen.svg')
+        self.action_quick_geocoding.setIcon(icon)
         self.action_quick_geocoding.setText(QCoreApplication.translate('RuGeocoder', '&Quick geocoding toolbox'))
 
-
         # Add toolbar button and menu item
-        self.iface.addToolBarIcon(self.action_convert)
-        self.iface.addPluginToMenu('&RuGeocoder', self.action_convert)
+        self.toolbar.addAction(self.action_convert)
+        self.iface.addPluginToMenu(self.menu_name, self.action_convert)
 
-        self.iface.addToolBarIcon(self.action_batch_geocoding)
-        self.iface.addPluginToMenu('&RuGeocoder', self.action_batch_geocoding)
+        self.toolbar.addAction(self.action_batch_geocoding)
+        self.iface.addPluginToMenu(self.menu_name, self.action_batch_geocoding)
 
-        self.iface.addToolBarIcon(self.action_quick_geocoding)
-        self.iface.addPluginToMenu('&RuGeocoder', self.action_quick_geocoding)
+        self.toolbar.addAction(self.action_quick_geocoding)
+        self.iface.addPluginToMenu(self.menu_name, self.action_quick_geocoding)
 
         #import pydevd
         #pydevd.settrace('localhost', port=9921, stdoutToServer=True, stderrToServer=True, suspend=False)
@@ -93,14 +114,26 @@ class RuGeocoderPlugin:
 
     def unload(self):
         # Remove the plugin menu item and icon
-        self.iface.removePluginMenu('&RuGeocoder', self.action_convert)
-        self.iface.removeToolBarIcon(self.action_convert)
+        self.iface.removePluginMenu(self.menu_name, self.action_convert)
+        self.iface.removePluginMenu(self.menu_name, self.action_batch_geocoding)
+        self.iface.removePluginMenu(self.menu_name, self.action_quick_geocoding)
 
-        self.iface.removePluginMenu('&RuGeocoder', self.action_batch_geocoding)
-        self.iface.removeToolBarIcon(self.action_batch_geocoding)
+        self.action_convert = None
+        self.action_batch_geocoding = None
+        self.action_quick_geocoding = None
+        self.toolbar = None
 
-        self.iface.removePluginMenu('&RuGeocoder', self.action_quick_geocoding)
-        self.iface.removeToolBarIcon(self.action_quick_geocoding)
+        mw = self.iface.mainWindow()
+        PluginSettings.set_dock_area(mw.dockWidgetArea(self.__quick_tlb))
+        PluginSettings.set_dock_floating(self.__quick_tlb.isFloating())
+        PluginSettings.set_dock_pos(self.__quick_tlb.pos())
+        PluginSettings.set_dock_size(self.__quick_tlb.size())
+        PluginSettings.set_dock_visibility(self.__quick_tlb.isVisible())
+        PluginSettings.set_dock_geosoder_name(self.__quick_tlb.get_active_geocoder_name())
+
+        self.iface.removeDockWidget(self.__quick_tlb)
+        del self.__quick_tlb
+
 
 
     def run_convert(self):
