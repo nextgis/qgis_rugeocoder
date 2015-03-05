@@ -325,16 +325,74 @@ Ignore the error and continue?</source>
     </message>
 </context>
 <context>
+    <name>QuickGeocodingToolbox</name>
+    <message>
+        <location filename="quick_geocoding_toolbox.py" line="44"/>
+        <source>Address...</source>
+        <translation>Адрес...</translation>
+    </message>
+    <message>
+        <location filename="ui_quick_geocoding_toolbox.py" line="50"/>
+        <source>Quick geocoding</source>
+        <translation>Быстрое геокодирование</translation>
+    </message>
+    <message>
+        <location filename="ui_quick_geocoding_toolbox.py" line="51"/>
+        <source>Enter address for geocoding</source>
+        <translation>Введите адрес для геокодирования</translation>
+    </message>
+    <message>
+        <location filename="quick_geocoding_toolbox.py" line="80"/>
+        <source>Searching...</source>
+        <translation>Поиск...</translation>
+    </message>
+    <message>
+        <location filename="quick_geocoding_toolbox.py" line="92"/>
+        <source>No results!</source>
+        <translation type="unfinished">Нет результатов поиска!</translation>
+    </message>
+</context>
+<context>
     <name>RuGeocoder</name>
     <message>
-        <location filename="ru_geocoder_plugin.py" line="60"/>
+        <location filename="ru_geocoder_plugin.py" line="87"/>
         <source>Convert CSV to SHP</source>
         <translation>Конвертировать CSV в SHP</translation>
     </message>
     <message>
-        <location filename="ru_geocoder_plugin.py" line="65"/>
+        <location filename="ru_geocoder_plugin.py" line="92"/>
         <source>Batch geocoding</source>
         <translation>Пакетное геокодирование</translation>
+    </message>
+    <message>
+        <location filename="ru_geocoder_plugin.py" line="99"/>
+        <source>&amp;Quick geocoding toolbox</source>
+        <translation>Панель &amp;быстрого геокодирования</translation>
+    </message>
+</context>
+<context>
+    <name>RuGeocoderPlugin</name>
+    <message>
+        <location filename="ru_geocoder_plugin.py" line="66"/>
+        <source>&amp;RuGeocoder</source>
+        <translation>&amp;RuGeocoder</translation>
+    </message>
+</context>
+<context>
+    <name>SearchThread</name>
+    <message>
+        <location filename="quick_geocoding_toolbox.py" line="145"/>
+        <source>Network error!
+{0}</source>
+        <translation>Ошибка сети!
+{0}</translation>
+    </message>
+    <message>
+        <location filename="quick_geocoding_toolbox.py" line="150"/>
+        <source>Error of processing!
+{0}: {1}</source>
+        <translation>Ошибка обработки!
+{0}: {1}</translation>
     </message>
 </context>
 </TS>

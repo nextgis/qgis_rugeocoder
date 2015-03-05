@@ -77,21 +77,26 @@ class QuickGeocodingToolbox(QDockWidget, Ui_QuickGeocodingToolbox):
 
     def show_progress(self):
         self.lstSearchResult.clear()
-        self.lstSearchResult.addItem("Searching...")
+        self.lstSearchResult.addItem(self.tr('Searching...'))
         
     def show_result(self, results):
-        print 'show'
         self.lstSearchResult.clear()
-        for (pt, desc) in results:
-            #print 'Result: ', desc #  DEBUG
+        if results:
+            for (pt, desc) in results:
+                new_item = QListWidgetItem()
+                new_item.setText(unicode(desc))
+                new_item.setData(Qt.UserRole, pt)
+                self.lstSearchResult.addItem(new_item)
+        else:
             new_item = QListWidgetItem()
-            new_item.setText(unicode(desc))
-            new_item.setData(Qt.UserRole, pt)
+            new_item.setText(self.tr('No results!'))
+            new_item.setData(Qt.UserRole, None)
             self.lstSearchResult.addItem(new_item)
+
         self.lstSearchResult.update()
             
     def show_error(self, error_text):
-        print error_text
+        #print error_text
         self.lstSearchResult.clear()
         self.lstSearchResult.addItem(error_text)
 
@@ -130,10 +135,8 @@ class SearchThread(QThread):
 
     def run(self):        
         results = []
-        results.append([None, self.search_text])  # debug
-        pt = None
-        desc = None
-        
+        #results.append([None, self.search_text])  # debug
+
         #geocode
         try:
             results = self.coder.geocode_multiple_results(self.search_text)
@@ -147,6 +150,6 @@ class SearchThread(QThread):
                         error_text = (self.tr("Error of processing!\n{0}: {1}")).format(unicode(sys.exc_info()[0].__name__), unicode(sys.exc_info()[1]))
                         #error_text = 'common'
                         self.error_occurred.emit(error_text)
-        
+
         self.data_downloaded.emit(results)
         #self.terminate()
