@@ -79,6 +79,7 @@ class RuGeocoderPlugin:
         self.__quick_tlb.move(PluginSettings.dock_pos())
         self.__quick_tlb.setVisible(PluginSettings.dock_visibility())
         self.__quick_tlb.set_active_geocoder(PluginSettings.dock_geocoder_name())
+        self.__quick_tlb.setWindowIcon(QIcon(path.join(_current_path, 'edit-find-project.png')))
 
 
     def initGui(self):
@@ -94,19 +95,20 @@ class RuGeocoderPlugin:
         QObject.connect(self.action_batch_geocoding, SIGNAL('triggered()'), self.run_batch)
 
         self.action_quick_geocoding = self.__quick_tlb.toggleViewAction()
-        icon = QgsApplication.getThemeIcon('/processing/images/toolbox.png') or QgsApplication.getThemeIcon('/mActionFileOpen.svg')
-        self.action_quick_geocoding.setIcon(icon)
+        self.action_quick_geocoding.setIcon(QIcon(path.join(_current_path, 'edit-find-project.png')))
         self.action_quick_geocoding.setText(QCoreApplication.translate('RuGeocoder', '&Quick geocoding toolbox'))
 
         # Add toolbar button and menu item
         self.toolbar.addAction(self.action_convert)
-        self.iface.addPluginToMenu(self.menu_name, self.action_convert)
+        self.iface.addPluginToWebMenu(self.menu_name, self.action_convert)
 
         self.toolbar.addAction(self.action_batch_geocoding)
-        self.iface.addPluginToMenu(self.menu_name, self.action_batch_geocoding)
+        self.iface.addPluginToWebMenu(self.menu_name, self.action_batch_geocoding)
+
+        self.toolbar.addSeparator()
 
         self.toolbar.addAction(self.action_quick_geocoding)
-        self.iface.addPluginToMenu(self.menu_name, self.action_quick_geocoding)
+        self.iface.addPluginToWebMenu(self.menu_name, self.action_quick_geocoding)
 
         #import pydevd
         #pydevd.settrace('localhost', port=9921, stdoutToServer=True, stderrToServer=True, suspend=False)
@@ -114,9 +116,9 @@ class RuGeocoderPlugin:
 
     def unload(self):
         # Remove the plugin menu item and icon
-        self.iface.removePluginMenu(self.menu_name, self.action_convert)
-        self.iface.removePluginMenu(self.menu_name, self.action_batch_geocoding)
-        self.iface.removePluginMenu(self.menu_name, self.action_quick_geocoding)
+        self.iface.removePluginWebMenu(self.menu_name, self.action_convert)
+        self.iface.removePluginWebMenu(self.menu_name, self.action_batch_geocoding)
+        self.iface.removePluginWebMenu(self.menu_name, self.action_quick_geocoding)
 
         self.action_convert = None
         self.action_batch_geocoding = None
