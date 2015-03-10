@@ -21,6 +21,7 @@
 import json
 import urllib2
 import urllib
+
 from qgis.core import QgsPoint
 
 from base_geocoder import BaseGeocoder

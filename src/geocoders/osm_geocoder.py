@@ -21,7 +21,9 @@
 import json
 import urllib2
 import urllib
-from qgis.core import QgsPoint 
+
+from qgis.core import QgsPoint
+
 #from PyQt4.QtGui import QMessageBox
 
 from base_geocoder import BaseGeocoder

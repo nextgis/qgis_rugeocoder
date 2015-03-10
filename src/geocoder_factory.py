@@ -19,11 +19,11 @@
  ***************************************************************************/
 """
 from exceptions import ValueError
-from osm_geocoder import OsmGeocoder
-from osm_ru_geocoder import OsmRuGeocoder
-from google_geocoder import GoogleGeocoder
-from beta_osm_ru_geocoder import BetaOsmRuGeocoder
-from yandex_geocoder import YandexGeocoder
+from geocoders.osm_geocoder import OsmGeocoder
+from geocoders.osm_ru_geocoder import OsmRuGeocoder
+from geocoders.google_geocoder import GoogleGeocoder
+from geocoders.beta_osm_ru_geocoder import BetaOsmRuGeocoder
+from geocoders.yandex_geocoder import YandexGeocoder
 
 
 geocoders = {
