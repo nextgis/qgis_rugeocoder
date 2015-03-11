@@ -29,19 +29,20 @@ from os import path
 
 from PyQt4.QtGui import QDialog, QMessageBox, QFileDialog
 from PyQt4.QtCore import QObject, SIGNAL
+from PyQt4 import uic
 
 from qgis.core import QgsVectorLayer,  QgsMapLayerRegistry
-
-from ui_converter_dialog import Ui_ConverterDialog
 
 
 _fs_encoding = sys.getfilesystemencoding()
 _message_encoding = locale.getdefaultlocale()[1]
 
+FORM_CLASS, _ = uic.loadUiType(path.join(
+    path.dirname(__file__), 'converter_dialog.ui'))
 
-class ConverterDialog(QDialog, Ui_ConverterDialog):
-    def __init__(self):
-        QDialog.__init__(self)
+class ConverterDialog(QDialog, FORM_CLASS):
+    def __init__(self, parent=None):
+        super(ConverterDialog, self).__init__(parent)
         self.setupUi(self)
         self.setFixedSize(self.size())
 

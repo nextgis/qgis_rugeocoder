@@ -19,19 +19,22 @@
  ***************************************************************************/
 """
 from urllib2 import URLError
-#import sys
+from os import path
 
+from PyQt4 import uic
 from PyQt4.QtGui import QDockWidget, QListWidgetItem  # , QMessageBox
 from PyQt4.QtCore import QThread, pyqtSignal, Qt
+
 from qgis.core import QgsPoint
 
 from geocoder_factory import GeocoderFactory
 from rb_result_renderer import RubberBandResultRenderer
 
-from ui_quick_geocoding_toolbox import Ui_QuickGeocodingToolbox
+FORM_CLASS, _ = uic.loadUiType(path.join(
+    path.dirname(__file__), 'quick_geocoding_toolbox.ui'))
 
 
-class QuickGeocodingToolbox(QDockWidget, Ui_QuickGeocodingToolbox):
+class QuickGeocodingToolbox(QDockWidget, FORM_CLASS):
     def __init__(self, iface):
         QDockWidget.__init__(self, iface.mainWindow())
         self.setupUi(self)

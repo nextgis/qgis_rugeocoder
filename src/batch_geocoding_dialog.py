@@ -18,26 +18,27 @@
  *                                                                         *
  ***************************************************************************/
 """
-
+import os
 import sys
 from urllib2 import URLError
 from datetime import datetime
 
-from geocoder_factory import GeocoderFactory
-
 from PyQt4.QtGui import QDialog, QMessageBox
 from PyQt4.QtCore import QObject, SIGNAL
+from PyQt4 import uic
 
 from qgis.core import QGis, QgsGeometry
 
-from ui_batch_geocoding_dialog import Ui_BatchGeocodingDialog
+from geocoder_factory import GeocoderFactory
 from utils import get_vector_layer_by_name, get_layer_names, get_layer_str_fields,  get_layer_all_fields
 import regions_helper
 
+FORM_CLASS, _ = uic.loadUiType(os.path.join(
+    os.path.dirname(__file__), 'batch_geocoding_dialog.ui'))
 
-class BatchGeocodingDialog(QDialog, Ui_BatchGeocodingDialog):
-    def __init__(self):
-        QDialog.__init__(self)
+class BatchGeocodingDialog(QDialog, FORM_CLASS):
+    def __init__(self, parent=None):
+        super(BatchGeocodingDialog, self).__init__(parent)
         self.setupUi(self)
         self.setFixedSize(self.size())
 
