@@ -3,7 +3,7 @@
 [general]
 name=RuGeocoder
 qgisMinimumVersion=2.0
-description=Geocode your csv files to shp (Russia only)
+description=Geocoding instruments (batch geocoding, csv2shp, geocoding panel). Russia only.
 version=0.4.1
 
 
@@ -43,9 +43,9 @@ changelog: 0.4.1:
         * Russian translation added
 
 tags= Geocoding, Address, Yandex, Google, Nominatim
-homepage=https://github.com/yellow-sky/RuGeocoder
-tracker=https://github.com/yellow-sky/RuGeocoder/issues
-repository=https://github.com/yellow-sky/RuGeocoder
+homepage=https://github.com/nextgis/RuGeocoder
+tracker=https://github.com/nextgis/RuGeocoder/issues
+repository=https://github.com/nextgis/RuGeocoder
 icon=icon.png 
 experimental=False
 deprecated=False
