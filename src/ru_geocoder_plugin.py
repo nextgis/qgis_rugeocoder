@@ -23,15 +23,11 @@ import sys
 # Import the PyQt and QGIS libraries
 from PyQt4.QtCore import QObject, SIGNAL, QSettings, QLocale, QFileInfo, QTranslator, QCoreApplication
 from PyQt4.QtGui import QAction, QIcon
-from qgis.core import QgsApplication
-# Initialize Qt resources from file resources.py
-import resources
 # Import the code for the dialog
 from batch_geocoding_dialog import BatchGeocodingDialog
 from converter_dialog import ConverterDialog
 from quick_geocoding_toolbox import  QuickGeocodingToolbox
 from plugin_settings import PluginSettings
-
 
 _fs_encoding = sys.getfilesystemencoding()
 _current_path = unicode(path.abspath(path.dirname(__file__)), _fs_encoding)
@@ -84,12 +80,12 @@ class RuGeocoderPlugin:
 
     def initGui(self):
         # Actions
-        self.action_convert = QAction(QIcon(':/plugins/rugeocoderplugin/convert.png'),
+        self.action_convert = QAction(QIcon(path.join(_current_path, 'convert.png')),
                                       QCoreApplication.translate('RuGeocoder', 'Convert CSV to SHP'),
                                       self.iface.mainWindow())
         QObject.connect(self.action_convert, SIGNAL("triggered()"), self.run_convert)
 
-        self.action_batch_geocoding = QAction(QIcon(':/plugins/rugeocoderplugin/icon.png'),
+        self.action_batch_geocoding = QAction(QIcon(path.join(_current_path, 'icon.png')),
                                               QCoreApplication.translate('RuGeocoder', 'Batch geocoding'),
                                               self.iface.mainWindow())
         QObject.connect(self.action_batch_geocoding, SIGNAL('triggered()'), self.run_batch)
