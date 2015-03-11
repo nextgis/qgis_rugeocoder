@@ -21,16 +21,21 @@
 import json
 import urllib2
 import urllib
+from os import path
 
 from qgis.core import QgsPoint
 
 #from PyQt4.QtGui import QMessageBox
+import sys
 
 from base_geocoder import BaseGeocoder
 
+_fs_encoding = sys.getfilesystemencoding()
+_current_path = unicode(path.abspath(path.dirname(__file__)), _fs_encoding)
 
 class OsmRuGeocoder(BaseGeocoder):
     url = 'http://www.openstreetmap.ru/api/search?q='
+    icon_path = path.join(_current_path, 'icons/', 'osm_ru.png')
 
     def _search(self, region, rayon, city, street, house_number):
         full_addr = self._construct_reverse_search_str(region, rayon, city, street, house_number)

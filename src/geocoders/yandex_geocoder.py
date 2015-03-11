@@ -21,14 +21,20 @@
 import json
 import urllib2
 import urllib
+from os import path
 
 from qgis.core import QgsPoint
+import sys
 
 from base_geocoder import BaseGeocoder
 
+_fs_encoding = sys.getfilesystemencoding()
+_current_path = unicode(path.abspath(path.dirname(__file__)), _fs_encoding)
 
 class YandexGeocoder(BaseGeocoder):
     url = 'http://geocode-maps.yandex.ru/1.x/?key=APbJTE8BAAAAwUV4ZgIAWchAMdqatI8n3SLIv26SUw2telQAAAAAAAAAAABJnzuIcf3RGjjl50cTEPtvjEbW8w==&format=json&geocode='
+    icon_path = path.join(_current_path, 'icons/', 'yandex.png')
+
 
     def geocode_components(self, region, rayon, city, street, house_number):
         full_addr = self._construct_reverse_search_str(region, rayon, city, street, house_number)

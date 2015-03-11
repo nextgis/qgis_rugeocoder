@@ -127,7 +127,7 @@ class RuGeocoderPlugin:
         PluginSettings.set_dock_pos(self.__quick_tlb.pos())
         PluginSettings.set_dock_size(self.__quick_tlb.size())
         PluginSettings.set_dock_visibility(self.__quick_tlb.isVisible())
-        PluginSettings.set_dock_geosoder_name(self.__quick_tlb.get_active_geocoder_name())
+        PluginSettings.set_dock_geocoder_name(self.__quick_tlb.get_active_geocoder_name())
 
         self.iface.removeDockWidget(self.__quick_tlb)
         del self.__quick_tlb

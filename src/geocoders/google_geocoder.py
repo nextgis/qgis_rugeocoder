@@ -22,16 +22,21 @@ import json
 import time
 import urllib2
 import urllib
+from os import path
 
 from qgis.core import QgsPoint
 
 #from PyQt4.QtGui import QMessageBox
+import sys
 
 from base_geocoder import BaseGeocoder
 
+_fs_encoding = sys.getfilesystemencoding()
+_current_path = unicode(path.abspath(path.dirname(__file__)), _fs_encoding)
 
 class GoogleGeocoder(BaseGeocoder):
     url = 'http://maps.googleapis.com/maps/api/geocode/json?&language=ru&sensor=false&address='
+    icon_path = path.join(_current_path, 'icons/', 'google.png')
 
     def geocode_components(self, region, rayon, city, street, house_number):
         full_addr = self._construct_search_str(region, rayon, city, street, house_number)

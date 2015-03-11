@@ -22,7 +22,7 @@ from urllib2 import URLError
 from os import path
 
 from PyQt4 import uic
-from PyQt4.QtGui import QDockWidget, QListWidgetItem  # , QMessageBox
+from PyQt4.QtGui import QDockWidget, QListWidgetItem, QIcon  # , QMessageBox
 from PyQt4.QtCore import QThread, pyqtSignal, Qt
 
 from qgis.core import QgsPoint
@@ -48,7 +48,12 @@ class QuickGeocodingToolbox(QDockWidget, FORM_CLASS):
 
         self.txtSearch.textChanged.connect(self.start_geocode)
         self.cmbGeocoder.currentIndexChanged.connect(self.start_geocode)
-        self.cmbGeocoder.addItems(GeocoderFactory.get_geocoders_names())
+
+        geocoders = GeocoderFactory.get_geocoders_names()
+        geocoders.sort()
+        for geocoder_name in geocoders:
+            icon_path = GeocoderFactory.get_geocoder(geocoder_name).icon_path
+            self.cmbGeocoder.addItem(QIcon(icon_path), geocoder_name)
 
         self.lstSearchResult.currentItemChanged.connect(self.result_selected)
         self.lstSearchResult.itemDoubleClicked.connect(self.result_selected)

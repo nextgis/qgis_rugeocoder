@@ -86,7 +86,7 @@ class PluginSettings():
         return settings.value('/ui/dockWidgetGeocoderName', '', type=str)
 
     @classmethod
-    def set_dock_geosoder_name(cls, val):
+    def set_dock_geocoder_name(cls, val):
         settings = cls.get_settings()
         settings.setValue('/ui/dockWidgetGeocoderName', val)
 

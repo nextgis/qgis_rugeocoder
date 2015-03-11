@@ -23,7 +23,7 @@ import sys
 from urllib2 import URLError
 from datetime import datetime
 
-from PyQt4.QtGui import QDialog, QMessageBox
+from PyQt4.QtGui import QDialog, QMessageBox, QIcon
 from PyQt4.QtCore import QObject, SIGNAL
 from PyQt4 import uic
 
@@ -47,7 +47,9 @@ class BatchGeocodingDialog(QDialog, FORM_CLASS):
         QObject.connect(self.cmbLayer, SIGNAL('currentIndexChanged(QString)'), self.fill_form)
 
         #INIT CONTROLS VALUES
-        self.cmbGeocoder.addItems(GeocoderFactory.get_geocoders_names())
+        for geocoder_name in GeocoderFactory.get_geocoders_names():
+            icon_path = GeocoderFactory.get_geocoder(geocoder_name).icon_path
+            self.cmbGeocoder.addItem(QIcon(icon_path), geocoder_name)
         self.cmbLayer.addItems(get_layer_names([QGis.Point]))
         for region in regions_helper.get_regions_names():
             self.cmbRegion.addItem(region['name'],  region)

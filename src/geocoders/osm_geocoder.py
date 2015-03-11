@@ -21,16 +21,21 @@
 import json
 import urllib2
 import urllib
+from os import path
 
 from qgis.core import QgsPoint
 
 #from PyQt4.QtGui import QMessageBox
+import sys
 
 from base_geocoder import BaseGeocoder
 
+_fs_encoding = sys.getfilesystemencoding()
+_current_path = unicode(path.abspath(path.dirname(__file__)), _fs_encoding)
 
 class OsmGeocoder(BaseGeocoder):
     url = 'http://nominatim.openstreetmap.org/search?countrycodes=ru&format=json&polygon=0&addressdetails=1&limit=10&accept-language=ru,en-US;&q='
+    icon_path = path.join(_current_path, 'icons/', 'osm.svg')
 
     def _normalize_num(self, num):
         if num is None:

@@ -19,10 +19,15 @@
  ***************************************************************************/
 """
 #from PyQt4.QtGui import QMessageBox
+from os import path
+import sys
 
+_fs_encoding = sys.getfilesystemencoding()
+_current_path = unicode(path.abspath(path.dirname(__file__)), _fs_encoding)
 
 class BaseGeocoder():
     url = None
+    icon_path = path.join(_current_path, 'icons/', 'undef.png')
 
     def __init__(self):
         pass
