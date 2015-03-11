@@ -26,11 +26,11 @@ from qgis.core import QGis, QgsRectangle, QgsCoordinateReferenceSystem, QgsCoord
 
 class RubberBandResultRenderer():
 
-    def __init__(self, iface):
+    def __init__(self, iface, color = QColor('magenta'), size = 12):
         self.iface = iface
         self.rb = QgsRubberBand(self.iface.mapCanvas(), QGis.Point)
-        self.rb.setColor(QColor('magenta'))
-        self.rb.setIconSize(12)
+        self.rb.setColor(color)
+        self.rb.setIconSize(size)
 
         self.srs_wgs84 = QgsCoordinateReferenceSystem(4326)
         self.transformation = QgsCoordinateTransform(self.srs_wgs84, self.srs_wgs84)
