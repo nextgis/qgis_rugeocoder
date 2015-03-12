@@ -23,6 +23,7 @@ from geocoders.osm_geocoder import OsmGeocoder
 from geocoders.osm_ru_geocoder import OsmRuGeocoder
 from geocoders.google_geocoder import GoogleGeocoder
 from geocoders.beta_osm_ru_geocoder import BetaOsmRuGeocoder
+from geocoders.sputnik_geocoder import SputnikGeocoder
 from geocoders.yandex_geocoder import YandexGeocoder
 
 
@@ -31,7 +32,8 @@ geocoders = {
     'OSM.RU': OsmRuGeocoder,
     'BETA.OSM.RU': BetaOsmRuGeocoder,
     'Google': GoogleGeocoder,
-    'Yandex': YandexGeocoder
+    'Yandex': YandexGeocoder,
+    'Sputnik': SputnikGeocoder
 }
 
 
