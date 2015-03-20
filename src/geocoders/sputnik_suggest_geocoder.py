@@ -18,59 +18,57 @@
  *                                                                         *
  ***************************************************************************/
 """
-#from PyQt4.QtGui import QMessageBox
+import json
+import urllib2
+import urllib
 from os import path
+
+from qgis.core import QgsPoint
 import sys
+
+from base_geocoder import BaseGeocoder
 
 _fs_encoding = sys.getfilesystemencoding()
 _current_path = unicode(path.abspath(path.dirname(__file__)), _fs_encoding)
 
-class BaseGeocoder():
-    url = None
-    terms_url = None
-    icon_path = path.join(_current_path, 'icons/', 'undef.png')
+class SputnikSuggestGeocoder(BaseGeocoder):
+    url = 'http://suggest.maps.sputnik.ru/?query='
+    terms_url = 'http://corp.sputnik.ru/maps'
+    icon_path = path.join(_current_path, 'icons/', 'sputnik.png')
 
-    def __init__(self):
-        pass
 
     def geocode_components(self, region, rayon, city, street, house_number):
-        raise NotImplementedError
+        full_addr = self._construct_reverse_search_str(region, rayon, city, street, house_number)
+        return self.geocode(full_addr)
 
     def geocode_components_multiple_results(self, region, rayon, city, street, house_number):
-        raise NotImplementedError
+        full_addr = self._construct_reverse_search_str(region, rayon, city, street, house_number)
+        return self.geocode_multiple_results(full_addr)
 
     def geocode(self, search_str):
-        raise NotImplementedError
+        res = self.geocode_multiple_results(search_str)
+        if len(res) > 0:
+            return res[0]
+        else:
+            return (QgsPoint(0, 0), 'Not found')
 
     def geocode_multiple_results(self, search_str):
-        raise NotImplementedError
+        full_addr = urllib.quote(search_str.encode('utf-8'))
+        if not full_addr:
+            return []
+        full_url = unicode(self.url) + unicode(full_addr, 'utf-8')
 
-    def _construct_search_str(self, region, rayon, city, street, house_number):
-        search_str = ''
-        if house_number:
-            search_str += house_number + ', '
-        if street:
-            search_str += street + ', '
-        if city:
-            search_str += city + ', '
-        if rayon:
-            search_str += rayon + ', '
-        if region:
-            search_str += region
-        search_str = search_str.rstrip().rstrip(',')
-        return search_str
+        f = urllib2.urlopen(full_url.encode('utf-8'))
+        resp_str = unicode(f.read(),  'utf-8')
+        resp_json = json.loads(resp_str)
 
-    def _construct_reverse_search_str(self, region, rayon, city, street, house_number):
-        search_str = ''
-        if region:
-            search_str += region + ', '
-        if rayon:
-            search_str += rayon + ', '
-        if city:
-            search_str += city + ', '
-        if street:
-            search_str += street + ', '
-        if house_number:
-            search_str += house_number
-        search_str = search_str.rstrip().rstrip(',')
-        return search_str
+        result = []
+        if resp_json:
+            for feat_mem in resp_json:
+                lat = feat_mem['position']['lat']
+                long = feat_mem['position']['lon']
+                pt = QgsPoint(float(long), float(lat))
+                result.append((pt, feat_mem['header']))
+
+        return result
+

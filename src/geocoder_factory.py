@@ -24,6 +24,7 @@ from geocoders.osm_ru_geocoder import OsmRuGeocoder
 from geocoders.google_geocoder import GoogleGeocoder
 from geocoders.beta_osm_ru_geocoder import BetaOsmRuGeocoder
 from geocoders.sputnik_geocoder import SputnikGeocoder
+from geocoders.sputnik_suggest_geocoder import SputnikSuggestGeocoder
 from geocoders.yandex_geocoder import YandexGeocoder
 
 
@@ -33,7 +34,8 @@ geocoders = {
     'BETA.OSM.RU': BetaOsmRuGeocoder,
     'Google': GoogleGeocoder,
     'Yandex': YandexGeocoder,
-    'Sputnik': SputnikGeocoder
+    'Sputnik': SputnikGeocoder,
+    'Sputnik.Suggest': SputnikSuggestGeocoder
 }
 
 
