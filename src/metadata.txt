@@ -3,9 +3,10 @@
 [general]
 name=RuGeocoder
 qgisMinimumVersion=2.0
-description=Geocoding instruments (batch geocoding, csv2shp, geocoding panel). Russia only.
+description=Geocoding instruments (batch geocoding, csv2shp, geocoding panel).
+about=Convenient geocoding panel and set of tools to use geocoding capabilities of various services.
+category=Vector
 version=0.4.1
-
 
 # Optional items:
 
@@ -51,5 +52,5 @@ experimental=False
 deprecated=False
 
 # Author contact information
-author=Nikulin Evgeniy
-email=nikulin.e at gmail
+author=NextGIS
+email=info@nextgis.com
